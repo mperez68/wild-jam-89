@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://ikqgje3vu0yh"]
+
+[ext_resource type="Script" uid="uid://d3p1ciava7op4" path="res://ui/scripts/song.gd" id="1_n66pc"]
+
+[node name="Song" type="Node"]
+script = ExtResource("1_n66pc")
+
+[node name="IntroBase" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+bus = &"Music"
+
+[node name="IntroMelody" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+bus = &"Music"
+
+[node name="LoopBase" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+bus = &"Music"
+
+[node name="LoopMelody" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+bus = &"Music"
+
+[node name="OutroBase" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+bus = &"Music"
+
+[node name="OutroMelody" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+bus = &"Music"
+
+[connection signal="finished" from="IntroBase" to="." method="_on_intro_finished"]
+[connection signal="finished" from="OutroBase" to="." method="_on_outro_finished"]

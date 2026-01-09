@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SceneLink" load_steps=3 format=3 uid="uid://caybmargsglpu"]
+
+[ext_resource type="PackedScene" uid="uid://c3njtoyv7xfje" path="res://main_scenes/menus/credits_menu.tscn" id="1_8egi1"]
+[ext_resource type="Script" uid="uid://v47s5u811bnh" path="res://resources/scripts/scene_link.gd" id="2_56jrr"]
+
+[resource]
+script = ExtResource("2_56jrr")
+button_text = "Credits"
+scene = ExtResource("1_8egi1")
+metadata/_custom_type_script = "uid://v47s5u811bnh"

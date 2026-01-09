@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgcqdghtuwmmf"]
+
+[ext_resource type="Script" uid="uid://di6merpl4ulc8" path="res://global/scripts/music_manager.gd" id="1_57y8n"]
+[ext_resource type="PackedScene" uid="uid://ikqgje3vu0yh" path="res://ui/song.tscn" id="2_jhamn"]
+
+[node name="MusicManager" type="Node"]
+script = ExtResource("1_57y8n")
+
+[node name="Song" parent="." instance=ExtResource("2_jhamn")]
+song_name = "Menu"

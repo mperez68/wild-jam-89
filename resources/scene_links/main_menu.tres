@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SceneLink" load_steps=3 format=3 uid="uid://brk1yihk1wauu"]
+
+[ext_resource type="PackedScene" uid="uid://duu3y5iwhrxg0" path="res://main_scenes/menus/main_menu.tscn" id="1_yb7e2"]
+[ext_resource type="Script" uid="uid://v47s5u811bnh" path="res://resources/scripts/scene_link.gd" id="2_1saow"]
+
+[resource]
+script = ExtResource("2_1saow")
+button_text = "Main Menu"
+scene = ExtResource("1_yb7e2")
+metadata/_custom_type_script = "uid://v47s5u811bnh"

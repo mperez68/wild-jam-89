@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cd6hjqjtlew8v"]
+
+[ext_resource type="Script" uid="uid://butdvyqc6ow1r" path="res://ui/scripts/bound_camera.gd" id="1_xfg3d"]
+
+[node name="BoundCamera" type="Camera2D"]
+script = ExtResource("1_xfg3d")
