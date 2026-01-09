@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dxyu51du6xt8k"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://dxyu51du6xt8k"]
+
+[ext_resource type="FontFile" uid="uid://g8p66mqlboqp" path="res://assets/fonts/Destroy Yourself.ttf" id="1_6x7we"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5bs8b"]
 content_margin_left = 8.0
@@ -17,6 +19,8 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [resource]
+default_font = ExtResource("1_6x7we")
+default_font_size = 32
 MarginContainer/constants/margin_bottom = 32
 MarginContainer/constants/margin_left = 16
 MarginContainer/constants/margin_right = 16

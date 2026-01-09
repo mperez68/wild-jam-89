@@ -47,6 +47,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Options"
 label_settings = ExtResource("1_c5csj")
+horizontal_alignment = 1
 
 [node name="OptionsPanel" type="PanelContainer" parent="MarginContainer/InnerMarginsContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2

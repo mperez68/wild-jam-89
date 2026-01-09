@@ -56,7 +56,7 @@ layout_mode = 2
 [node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer/VBoxContainer/PanelContainer2"]
 layout_mode = 2
 bbcode_enabled = true
-text = "[center][font_size=12]GEIST_COMM_GAMES, 2025[/font_size][/center]"
+text = "[center][font_size=12]GEIST_COMM_GAMES, 2026[/font_size][/center]"
 fit_content = true
 autowrap_mode = 0
 script = ExtResource("4_3ehtj")

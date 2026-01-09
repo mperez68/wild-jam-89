@@ -1,4 +1,7 @@
-[gd_resource type="LabelSettings" format=3 uid="uid://x6yphufd1ppd"]
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://x6yphufd1ppd"]
+
+[ext_resource type="FontFile" uid="uid://cnrikuml5gnmp" path="res://assets/fonts/Road_Rage.otf" id="1_iwxya"]
 
 [resource]
+font = ExtResource("1_iwxya")
 font_size = 64
