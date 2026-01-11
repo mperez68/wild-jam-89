@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://cclanb6au283g"]
+
+[ext_resource type="Texture2D" uid="uid://dvrfyhqfcnlri" path="res://assets/sprites/characters.png" id="1_oum22"]
+[ext_resource type="Script" uid="uid://b5j8wqovpmpwp" path="res://ui/scripts/reticle.gd" id="1_prvsu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6irrr"]
+atlas = ExtResource("1_oum22")
+region = Rect2(16, 16, 16, 16)
+
+[node name="Reticle" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_prvsu")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.78431374)
+layout_mode = 0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+pivot_offset = Vector2(8, 8)
+texture = SubResource("AtlasTexture_6irrr")
+stretch_mode = 3

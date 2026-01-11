@@ -1,0 +1,97 @@
+[gd_scene load_steps=7 format=3 uid="uid://cagvwdclup530"]
+
+[ext_resource type="Texture2D" uid="uid://dvrfyhqfcnlri" path="res://assets/sprites/characters.png" id="1_buk82"]
+[ext_resource type="Script" uid="uid://bepdxnv417iq3" path="res://game_objects/scripts/tank.gd" id="1_fhp78"]
+[ext_resource type="PackedScene" uid="uid://cclanb6au283g" path="res://ui/reticle.tscn" id="3_rirh6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fhp78"]
+atlas = ExtResource("1_buk82")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_buk82"]
+load_path = "res://.godot/imported/characters.png-d6ffa84ab3fa37930dc801b0af6f49b5.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rirh6"]
+atlas = SubResource("CompressedTexture2D_buk82")
+region = Rect2(3, 19, 10, 10)
+
+[node name="Tank" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 7
+motion_mode = 1
+script = ExtResource("1_fhp78")
+camera_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(6, 4)
+texture = SubResource("AtlasTexture_fhp78")
+offset = Vector2(2, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(6, 4)
+polygon = PackedVector2Array(-6, -8, -6, 8, 10, 8, 10, -8)
+
+[node name="CameraHolder" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Camera" type="Camera2D" parent="CameraHolder"]
+unique_name_in_owner = true
+position = Vector2(200, 0)
+rotation = 1.5707964
+ignore_rotation = false
+enabled = false
+rotation_smoothing_enabled = true
+
+[node name="Turret" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Turret"]
+scale = Vector2(10, 3)
+texture = SubResource("AtlasTexture_rirh6")
+offset = Vector2(2, 0)
+
+[node name="ReticleContainer" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Reticle" parent="ReticleContainer" instance=ExtResource("3_rirh6")]
+unique_name_in_owner = true
+modulate = Color(1, 1, 0, 1)
+layout_mode = 1
+offset_left = 500.0
+offset_right = 516.0
+offset_bottom = 16.0
+img_scale = Vector2(2, 2)
+
+[node name="Line" parent="ReticleContainer" instance=ExtResource("3_rirh6")]
+unique_name_in_owner = true
+modulate = Color(0.3665946, 0.3665946, 0.36659458, 1)
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+
+[node name="Line2" parent="ReticleContainer" instance=ExtResource("3_rirh6")]
+unique_name_in_owner = true
+modulate = Color(0.7121294, 0.7121294, 0.71212935, 1)
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+
+[node name="Line3" parent="ReticleContainer" instance=ExtResource("3_rirh6")]
+unique_name_in_owner = true
+modulate = Color(0.3665946, 0.3665946, 0.36659458, 1)
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+
+[node name="AimTarget" parent="ReticleContainer" instance=ExtResource("3_rirh6")]
+unique_name_in_owner = true
+layout_mode = 0
+img_scale = Vector2(0.5, 0.5)
