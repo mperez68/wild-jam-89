@@ -8,8 +8,10 @@ enum WeaponSlot{ PRIMARY, SECONDARY, TERTIARY }
 @onready var reticle: Control = %Reticle
 @onready var line: Array[Control] = [ %Reticle, %Line, %Line2, %Line3 ]
 @onready var aim_target: Reticle = %AimTarget
+@onready var cannon_end: Node2D = %CannonEnd
 #@onready var reticle_container: Control = %ReticleContainer
 
+@export var health: int = 100
 @export var speed: float = 500.0
 @export_range(0, 90, 0.1, "or_greater") var rotate_speed: float = 1.4
 @export_range(0, 90, 0.1, "or_greater") var turret_speed: float = 1.0
@@ -20,6 +22,14 @@ enum WeaponSlot{ PRIMARY, SECONDARY, TERTIARY }
 		camera_enabled = value
 		if camera:
 			camera.enabled = camera_enabled
+@export var weapons: Dictionary[WeaponSlot, Weapon] = {
+	WeaponSlot.PRIMARY: null,
+	WeaponSlot.SECONDARY: null,
+	WeaponSlot.TERTIARY: null
+}
+@onready var primary_weapon_timer: Timer = %PrimaryWeaponTimer
+@onready var secondary_weapon_timer: Timer = %SecondaryWeaponTimer
+@onready var tertiary_weapon_timer: Timer = %TertiaryWeaponTimer
 
 var move_vector: Vector2 = Vector2.ZERO
 var aim_vector: Vector2 = Vector2.ZERO
@@ -73,12 +83,25 @@ func _input(event: InputEvent) -> void:	# TODO move to player controller
 	if event.is_action("accelerate") or event.is_action("reverse") or event.is_action("steer_left") or event.is_action("steer_right"):
 		move_vector = Input.get_vector("steer_left", "steer_right", "reverse", "accelerate")
 	# Guns
-	if event.is_action_pressed("fire_01"):
-		fire(WeaponSlot.PRIMARY)
-	elif event.is_action_pressed("fire_02"):
-		fire(WeaponSlot.SECONDARY)
-	elif event.is_action_pressed("fire_03"):
-		fire(WeaponSlot.TERTIARY)
+	if weapons[WeaponSlot.PRIMARY]:
+		if event.is_action_pressed("fire_01"):
+			fire(WeaponSlot.PRIMARY)
+			primary_weapon_timer.start(weapons[WeaponSlot.PRIMARY].fire_rate)
+		elif event.is_action_released("fire_01"):
+			primary_weapon_timer.stop()
+	
+	if weapons[WeaponSlot.SECONDARY]:
+		if event.is_action_pressed("fire_02"):
+			fire(WeaponSlot.SECONDARY)
+		elif event.is_action_released("fire_02"):
+			pass
+	
+	
+	if weapons[WeaponSlot.TERTIARY]:
+		if event.is_action_pressed("fire_03"):
+			fire(WeaponSlot.TERTIARY)
+		elif event.is_action_released("fire_03"):
+			pass
 	
 	if event.is_action("aim_up") or event.is_action("aim_down") or event.is_action("aim_left") or event.is_action("aim_right"):
 		aim_vector = (Input.get_vector("aim_left", "aim_right", "aim_down", "aim_up") * rotate_speed * 2).rotated(rotation)
@@ -86,7 +109,12 @@ func _input(event: InputEvent) -> void:	# TODO move to player controller
 
 # PUBLIC
 func fire(slot: WeaponSlot):
-	print(slot)
+	if weapons[slot]:
+		var missile: Missile = weapons[slot].ammo_type.instantiate()
+		missile.rotation = (cannon_end.global_position - global_position).angle()
+		missile.position = cannon_end.global_position
+		#missile.linear_velocity = velocity
+		add_sibling(missile)
 
 
 # PRIVATE

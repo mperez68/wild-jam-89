@@ -99,3 +99,4 @@ aim_down={
 2d_physics/layer_1="Floor"
 2d_physics/layer_2="wall"
 2d_physics/layer_3="tank"
+2d_physics/layer_4="missile"

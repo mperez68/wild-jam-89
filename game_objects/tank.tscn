@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cagvwdclup530"]
+[gd_scene load_steps=9 format=3 uid="uid://cagvwdclup530"]
 
 [ext_resource type="Texture2D" uid="uid://dvrfyhqfcnlri" path="res://assets/sprites/characters.png" id="1_buk82"]
 [ext_resource type="Script" uid="uid://bepdxnv417iq3" path="res://game_objects/scripts/tank.gd" id="1_fhp78"]
+[ext_resource type="Script" uid="uid://cwbysqs5j2c1y" path="res://resource_script/weapon.gd" id="2_8sa7y"]
+[ext_resource type="Resource" uid="uid://ck83b7nebdapn" path="res://weapon_presets/scrap_cannon.tres" id="3_n45le"]
 [ext_resource type="PackedScene" uid="uid://cclanb6au283g" path="res://ui/reticle.tscn" id="3_rirh6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fhp78"]
@@ -21,6 +23,11 @@ collision_mask = 7
 motion_mode = 1
 script = ExtResource("1_fhp78")
 camera_enabled = true
+weapons = Dictionary[int, ExtResource("2_8sa7y")]({
+0: ExtResource("3_n45le"),
+1: null,
+2: null
+})
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -51,6 +58,10 @@ unique_name_in_owner = true
 scale = Vector2(10, 3)
 texture = SubResource("AtlasTexture_rirh6")
 offset = Vector2(2, 0)
+
+[node name="CannonEnd" type="Node2D" parent="Turret"]
+unique_name_in_owner = true
+position = Vector2(100, 0)
 
 [node name="ReticleContainer" type="Control" parent="."]
 unique_name_in_owner = true
@@ -95,3 +106,16 @@ offset_bottom = 16.0
 unique_name_in_owner = true
 layout_mode = 0
 img_scale = Vector2(0.5, 0.5)
+
+[node name="PrimaryWeaponTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="SecondaryWeaponTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="TertiaryWeaponTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[connection signal="timeout" from="PrimaryWeaponTimer" to="." method="fire" binds= [0]]
+[connection signal="timeout" from="SecondaryWeaponTimer" to="." method="fire" binds= [1]]
+[connection signal="timeout" from="TertiaryWeaponTimer" to="." method="fire" binds= [2]]
