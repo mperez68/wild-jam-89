@@ -18,6 +18,6 @@ func _ready():
 
 # SIGNALS
 func _on_body_entered(body: Node) -> void:
-	if body is Tank:
+	if body is Vehicle:
 		body.damage(damage, piercing)
 	queue_free()

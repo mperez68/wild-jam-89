@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cmtmg1ppctavn" path="res://main_scenes/scripts/arena.gd" id="1_c5se8"]
 [ext_resource type="Texture2D" uid="uid://c6ckwtigpoy5i" path="res://assets/sprites/terrain_set.png" id="2_f3vei"]
-[ext_resource type="PackedScene" uid="uid://cagvwdclup530" path="res://game_objects/tank.tscn" id="3_awl6k"]
+[ext_resource type="PackedScene" uid="uid://cagvwdclup530" path="res://game_objects/vehicle.tscn" id="3_awl6k"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_f3vei"]
 

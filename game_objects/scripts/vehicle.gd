@@ -1,25 +1,27 @@
-class_name Tank extends CharacterBody2D
+class_name Vehicle extends CharacterBody2D
 
 signal died
 
 enum WeaponSlot{ PRIMARY, SECONDARY, TERTIARY }
 
 const COLLISION_DAMAGE: int = 10
+const COLLISION_SPEED: float = 250.0
 const MINIMUM_DAMAGE: int = 1
 
 @onready var turret: Node2D = %Turret
 @onready var camera: Camera2D = %Camera
-@onready var rotation_nodes: Array[Node] = [ %Sprite2D, %CollisionPolygon2D, %CameraHolder, %Reticle, %Line, %Line2, %Line3 ]
 @onready var reticle: Control = %Reticle
-@onready var line: Array[Control] = [ %Reticle, %Line, %Line2, %Line3 ]
 @onready var aim_target: Reticle = %AimTarget
 @onready var cannon_end: Node2D = %CannonEnd
+@onready var reticle_container: Control = %ReticleContainer
+@onready var line: Array[Control] = [ %Reticle, %Line, %Line2, %Line3 ]
+@onready var rotation_nodes: Array[Node] = [ %Sprite2D, %CollisionPolygon2D, %CameraHolder,
+											%Reticle, %Line, %Line2, %Line3 ]
 @onready var weapon_timers: Dictionary[WeaponSlot, Timer] = {
 	WeaponSlot.PRIMARY: %PrimaryWeaponTimer,
 	WeaponSlot.SECONDARY: %SecondaryWeaponTimer,
 	WeaponSlot.TERTIARY: %TertiaryWeaponTimer
 }
-@onready var reticle_container: Control = %ReticleContainer
 
 @export_range(1, 150, 1.0, "or_greater") var max_health: int = 100
 @export var speed: float = 500.0
@@ -91,9 +93,16 @@ func _physics_process(delta: float) -> void:
 	var lateral_acceleration: float = move_vector.y * speed * delta
 	velocity += (Vector2(lateral_acceleration, 0) * (1.0 if lateral_acceleration > 0 else reverse_multiplier)).rotated(steer_rotation)
 	velocity *= friction
-	var collide := move_and_collide(velocity, true)
+	var collide := move_and_collide(velocity * delta, true)
 	if collide:
-		print(collide)
+		if velocity.length() > COLLISION_SPEED:
+			damage(COLLISION_DAMAGE, 0)
+			velocity = -velocity
+			if collide.get_collider() is Vehicle:
+				collide.get_collider().damage(COLLISION_DAMAGE, 0)
+				collide.get_collider().velocity += -velocity
+		else:
+			velocity = velocity / 2
 	move_and_slide()
 
 
@@ -110,6 +119,7 @@ func damage(value: int, piercing: int):
 	health -= max(MINIMUM_DAMAGE, value - max(0, hull_strength - piercing))
 	if health <= 0:
 		died.emit()
+	print("%s:%s HP" % [name, health])
 
 
 # PRIVATE
