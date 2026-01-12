@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cagvwdclup530"]
+[gd_scene load_steps=10 format=3 uid="uid://cagvwdclup530"]
 
 [ext_resource type="Texture2D" uid="uid://dvrfyhqfcnlri" path="res://assets/sprites/characters.png" id="1_buk82"]
 [ext_resource type="Script" uid="uid://bepdxnv417iq3" path="res://game_objects/scripts/tank.gd" id="1_fhp78"]
 [ext_resource type="Script" uid="uid://cwbysqs5j2c1y" path="res://resource_script/weapon.gd" id="2_8sa7y"]
 [ext_resource type="Resource" uid="uid://ck83b7nebdapn" path="res://weapon_presets/scrap_cannon.tres" id="3_n45le"]
 [ext_resource type="PackedScene" uid="uid://cclanb6au283g" path="res://ui/reticle.tscn" id="3_rirh6"]
+[ext_resource type="Script" uid="uid://blu0tyvkmqwks" path="res://game_objects/scripts/player_controller.gd" id="6_n45le"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fhp78"]
 atlas = ExtResource("1_buk82")
@@ -22,7 +23,6 @@ collision_layer = 4
 collision_mask = 7
 motion_mode = 1
 script = ExtResource("1_fhp78")
-camera_enabled = true
 weapons = Dictionary[int, ExtResource("2_8sa7y")]({
 0: ExtResource("3_n45le"),
 1: null,
@@ -116,6 +116,11 @@ unique_name_in_owner = true
 [node name="TertiaryWeaponTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 
-[connection signal="timeout" from="PrimaryWeaponTimer" to="." method="fire" binds= [0]]
-[connection signal="timeout" from="SecondaryWeaponTimer" to="." method="fire" binds= [1]]
-[connection signal="timeout" from="TertiaryWeaponTimer" to="." method="fire" binds= [2]]
+[node name="PlayerController" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_n45le")
+
+[connection signal="died" from="." to="." method="_on_died"]
+[connection signal="timeout" from="PrimaryWeaponTimer" to="." method="_on_fire" binds= [0]]
+[connection signal="timeout" from="SecondaryWeaponTimer" to="." method="_on_fire" binds= [1]]
+[connection signal="timeout" from="TertiaryWeaponTimer" to="." method="_on_fire" binds= [2]]

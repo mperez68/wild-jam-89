@@ -1,6 +1,11 @@
 class_name Tank extends CharacterBody2D
 
+signal died
+
 enum WeaponSlot{ PRIMARY, SECONDARY, TERTIARY }
+
+const COLLISION_DAMAGE: int = 10
+const MINIMUM_DAMAGE: int = 1
 
 @onready var turret: Node2D = %Turret
 @onready var camera: Camera2D = %Camera
@@ -9,28 +14,44 @@ enum WeaponSlot{ PRIMARY, SECONDARY, TERTIARY }
 @onready var line: Array[Control] = [ %Reticle, %Line, %Line2, %Line3 ]
 @onready var aim_target: Reticle = %AimTarget
 @onready var cannon_end: Node2D = %CannonEnd
-#@onready var reticle_container: Control = %ReticleContainer
+@onready var weapon_timers: Dictionary[WeaponSlot, Timer] = {
+	WeaponSlot.PRIMARY: %PrimaryWeaponTimer,
+	WeaponSlot.SECONDARY: %SecondaryWeaponTimer,
+	WeaponSlot.TERTIARY: %TertiaryWeaponTimer
+}
+@onready var reticle_container: Control = %ReticleContainer
 
-@export var health: int = 100
+@export_range(1, 150, 1.0, "or_greater") var max_health: int = 100
 @export var speed: float = 500.0
 @export_range(0, 90, 0.1, "or_greater") var rotate_speed: float = 1.4
 @export_range(0, 90, 0.1, "or_greater") var turret_speed: float = 1.0
 @export_range(0.0, 1.0, 0.01) var friction: float = 0.95
 @export_range(0.0, 1.0, 0.01) var reverse_multiplier: float = 0.5
-@export var camera_enabled: bool = false:
+@export var is_player: bool = false:
 	set(value):
-		camera_enabled = value
-		if camera:
-			camera.enabled = camera_enabled
+		is_player = value
+		if camera and reticle_container:
+			camera.enabled = is_player
+			reticle_container.visible = is_player
 @export var weapons: Dictionary[WeaponSlot, Weapon] = {
 	WeaponSlot.PRIMARY: null,
 	WeaponSlot.SECONDARY: null,
 	WeaponSlot.TERTIARY: null
 }
-@onready var primary_weapon_timer: Timer = %PrimaryWeaponTimer
-@onready var secondary_weapon_timer: Timer = %SecondaryWeaponTimer
-@onready var tertiary_weapon_timer: Timer = %TertiaryWeaponTimer
+@export var ammo: Dictionary[Weapon.AmmoType, int] = {
+	Weapon.AmmoType.SCRAP: 100,
+	Weapon.AmmoType.BULLETS: 100,
+	Weapon.AmmoType.ROCKETS: 100
+}
+@export var hull_strength: int = 5
 
+const START_COLOR: Color = Color.WHITE
+const END_COLOR: Color = Color.RED
+
+@onready var health: int = max_health:
+	set(value):
+		health = value
+		modulate = START_COLOR.lerp(END_COLOR, 1 - float(health) / float(max_health))
 var move_vector: Vector2 = Vector2.ZERO
 var aim_vector: Vector2 = Vector2.ZERO
 var steer_rotation: float = 0:
@@ -40,10 +61,13 @@ var steer_rotation: float = 0:
 		if !rotation_nodes.is_empty() and rotation_nodes.front():
 			for node in rotation_nodes:
 				node.rotation = steer_rotation
+var dead: bool:
+	get():
+		return health <= 0
 
 # ENGINE
 func _ready() -> void:
-	camera_enabled = camera_enabled
+	is_player = is_player
 	steer_rotation = steer_rotation
 
 func _physics_process(delta: float) -> void:
@@ -72,60 +96,42 @@ func _physics_process(delta: float) -> void:
 		print(collide)
 	move_and_slide()
 
-func _process(_delta: float) -> void:
-	# Turrets
-	var mouse_position: Vector2 = get_local_mouse_position()
-	if mouse_position != Vector2.ZERO and _is_mouse_in_viewport():
-		aim_target.position = mouse_position
-
-func _input(event: InputEvent) -> void:	# TODO move to player controller
-	# Movement
-	if event.is_action("accelerate") or event.is_action("reverse") or event.is_action("steer_left") or event.is_action("steer_right"):
-		move_vector = Input.get_vector("steer_left", "steer_right", "reverse", "accelerate")
-	# Guns
-	if weapons[WeaponSlot.PRIMARY]:
-		if event.is_action_pressed("fire_01"):
-			fire(WeaponSlot.PRIMARY)
-			primary_weapon_timer.start(weapons[WeaponSlot.PRIMARY].fire_rate)
-		elif event.is_action_released("fire_01"):
-			primary_weapon_timer.stop()
-	
-	if weapons[WeaponSlot.SECONDARY]:
-		if event.is_action_pressed("fire_02"):
-			fire(WeaponSlot.SECONDARY)
-		elif event.is_action_released("fire_02"):
-			pass
-	
-	
-	if weapons[WeaponSlot.TERTIARY]:
-		if event.is_action_pressed("fire_03"):
-			fire(WeaponSlot.TERTIARY)
-		elif event.is_action_released("fire_03"):
-			pass
-	
-	if event.is_action("aim_up") or event.is_action("aim_down") or event.is_action("aim_left") or event.is_action("aim_right"):
-		aim_vector = (Input.get_vector("aim_left", "aim_right", "aim_down", "aim_up") * rotate_speed * 2).rotated(rotation)
-
 
 # PUBLIC
-func fire(slot: WeaponSlot):
+func fire(event: InputEvent, action: StringName, slot: WeaponSlot):
 	if weapons[slot]:
-		var missile: Missile = weapons[slot].ammo_type.instantiate()
-		missile.rotation = (cannon_end.global_position - global_position).angle()
-		missile.position = cannon_end.global_position
-		#missile.linear_velocity = velocity
-		add_sibling(missile)
+		if event.is_action_pressed(action):
+			_on_fire(slot)
+			weapon_timers[slot].start(weapons[slot].fire_rate)
+		elif event.is_action_released(action):
+			weapon_timers[slot].stop()
+
+func damage(value: int, piercing: int):
+	health -= max(MINIMUM_DAMAGE, value - max(0, hull_strength - piercing))
+	if health <= 0:
+		died.emit()
 
 
 # PRIVATE
+func _on_fire(slot: WeaponSlot):
+	if weapons[slot]:
+		for i in weapons[slot].slugs_per_shot:
+			if ammo[weapons[slot].ammo_type] > 0:
+				ammo[weapons[slot].ammo_type] -= 1
+				var missile: Missile = weapons[slot].ammo_scene.instantiate()
+				missile.rotation = (cannon_end.global_position - global_position).angle()
+				missile.position = cannon_end.global_position
+				add_sibling(missile)
+			else:
+				print("no ammo")
+
 func _draw_reticle():
 	for i in line.size():
 		line[i].position = lerp(reticle.position, Vector2.ZERO, float(i) / float(line.size()))
 
-func _is_mouse_in_viewport() -> bool:
-	var mouse_pos := get_viewport().get_mouse_position()
-	var rect := Rect2(Vector2.ZERO, get_viewport().get_visible_rect().size)
-	return rect.has_point(mouse_pos)
-
-
 # SIGNALS
+func _on_died() -> void:
+	modulate = Color.DIM_GRAY
+	move_vector = Vector2.ZERO
+	aim_vector = Vector2.ZERO
+	print("dead")

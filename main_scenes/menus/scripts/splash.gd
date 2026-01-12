@@ -2,16 +2,13 @@ class_name Splash extends MenuControl
 
 const MAIN_MENU: PackedScene = preload("res://main_scenes/menus/main_menu.tscn")
 
-@onready var pause_timer: Timer = %PauseTimer
+@onready var animation_player: AnimationPlayer = %AnimationPlayer
 
 
 # ENGINE
 func _input(event: InputEvent) -> void:
-	if pause_timer.is_stopped():
-		return
 	if event is InputEventKey or event is InputEventMouseButton:
-		pause_timer.stop()
-		_on_pause_timer_timeout()
+		_on_animation_player_animation_finished("transition")
 
 
 # PUBLIC
@@ -21,5 +18,6 @@ func _input(event: InputEvent) -> void:
 
 
 # SIGNALS
-func _on_pause_timer_timeout() -> void:
-	SceneManager.new_scene(MAIN_MENU)
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "transition":
+		SceneManager.new_scene(MAIN_MENU)

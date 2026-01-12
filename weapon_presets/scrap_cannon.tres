@@ -5,5 +5,5 @@
 
 [resource]
 script = ExtResource("1_m2eey")
-ammo_type = ExtResource("1_pfqx3")
+ammo_scene = ExtResource("1_pfqx3")
 metadata/_custom_type_script = "uid://cwbysqs5j2c1y"

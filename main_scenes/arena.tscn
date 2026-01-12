@@ -1313,3 +1313,12 @@ tile_set = SubResource("TileSet_ed05f")
 [node name="Tank" parent="." instance=ExtResource("3_awl6k")]
 position = Vector2(357, 268)
 speed = 1000.0
+is_player = true
+
+[node name="Tank2" parent="." instance=ExtResource("3_awl6k")]
+position = Vector2(640, 1230)
+rotation = -1.5707964
+
+[node name="Tank3" parent="." instance=ExtResource("3_awl6k")]
+position = Vector2(1284, 402)
+rotation = -3.1415927

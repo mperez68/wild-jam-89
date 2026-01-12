@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://duu3y5iwhrxg0"]
+[gd_scene load_steps=15 format=3 uid="uid://duu3y5iwhrxg0"]
 
 [ext_resource type="Theme" uid="uid://dxyu51du6xt8k" path="res://resources/ui/menu_theme.tres" id="1_do6qc"]
 [ext_resource type="Script" uid="uid://dkfgbvo05f8o2" path="res://ui/scripts/title_label.gd" id="2_7p3sw"]
@@ -6,10 +6,19 @@
 [ext_resource type="LabelSettings" uid="uid://x6yphufd1ppd" path="res://resources/ui/header_settings.tres" id="2_ids5a"]
 [ext_resource type="Texture2D" uid="uid://bpx4wbmoxfcpn" path="res://icon.svg" id="3_ayvsf"]
 [ext_resource type="PackedScene" uid="uid://dhn5bb6wsu3fv" path="res://ui/scene_change_button.tscn" id="4_vb3i7"]
+[ext_resource type="Texture2D" uid="uid://b3ng1om524p7n" path="res://assets/icons/repurposed.png" id="5_38vm8"]
 [ext_resource type="Resource" uid="uid://caybmargsglpu" path="res://resources/scene_links/credits_menu.tres" id="5_himie"]
 [ext_resource type="PackedScene" uid="uid://c1iwfo7rduuxg" path="res://ui/quit_button.tscn" id="5_vb3i7"]
 [ext_resource type="Resource" uid="uid://coxqd8qcpoi8t" path="res://resources/scene_links/options_menu.tres" id="5_yy0sh"]
+[ext_resource type="PackedScene" uid="uid://bh1l233d5ysps" path="res://main_scenes/arena.tscn" id="7_fagh0"]
+[ext_resource type="Script" uid="uid://v47s5u811bnh" path="res://resources/scripts/scene_link.gd" id="8_clqb2"]
 [ext_resource type="Script" uid="uid://ccvt4jcjtvtea" path="res://ui/scripts/footer.gd" id="8_yy0sh"]
+
+[sub_resource type="Resource" id="Resource_osr0g"]
+script = ExtResource("8_clqb2")
+button_text = "START"
+scene = ExtResource("7_fagh0")
+metadata/_custom_type_script = "uid://v47s5u811bnh"
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -46,13 +55,23 @@ layout_mode = 2
 [node name="TitleContainer" type="PanelContainer" parent="MarginContainer/InnerMarginsContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="MarginContainer/InnerMarginsContainer/CenterContainer/VBoxContainer/TitleContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/InnerMarginsContainer/CenterContainer/VBoxContainer/TitleContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/InnerMarginsContainer/CenterContainer/VBoxContainer/TitleContainer/VBoxContainer"]
 layout_mode = 2
 text = "It Still Runs"
 label_settings = ExtResource("2_ids5a")
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("2_7p3sw")
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/InnerMarginsContainer/CenterContainer/VBoxContainer/TitleContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+texture = ExtResource("5_38vm8")
+expand_mode = 2
+stretch_mode = 5
 
 [node name="BodyContainer" type="PanelContainer" parent="MarginContainer/InnerMarginsContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
@@ -62,15 +81,23 @@ layout_mode = 2
 
 [node name="SceneChangeButton" parent="MarginContainer/InnerMarginsContainer/CenterContainer/VBoxContainer/BodyContainer/VBoxContainer" instance=ExtResource("4_vb3i7")]
 layout_mode = 2
+text = "START"
+scene_link = SubResource("Resource_osr0g")
 
-[node name="OptionsButton" parent="MarginContainer/InnerMarginsContainer/CenterContainer/VBoxContainer/BodyContainer/VBoxContainer" instance=ExtResource("4_vb3i7")]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/InnerMarginsContainer/CenterContainer/VBoxContainer/BodyContainer/VBoxContainer"]
 layout_mode = 2
+alignment = 1
+
+[node name="OptionsButton" parent="MarginContainer/InnerMarginsContainer/CenterContainer/VBoxContainer/BodyContainer/VBoxContainer/HBoxContainer" instance=ExtResource("4_vb3i7")]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Options"
 scene_link = ExtResource("5_yy0sh")
 to_back_stack = true
 
-[node name="CreditsButton" parent="MarginContainer/InnerMarginsContainer/CenterContainer/VBoxContainer/BodyContainer/VBoxContainer" instance=ExtResource("4_vb3i7")]
+[node name="CreditsButton" parent="MarginContainer/InnerMarginsContainer/CenterContainer/VBoxContainer/BodyContainer/VBoxContainer/HBoxContainer" instance=ExtResource("4_vb3i7")]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Credits"
 scene_link = ExtResource("5_himie")
 to_back_stack = true
