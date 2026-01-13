@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=5 format=3 uid="uid://br4rbkpn57fv3"]
+
+[ext_resource type="Script" uid="uid://cwbysqs5j2c1y" path="res://resource_script/weapon.gd" id="1_3terp"]
+[ext_resource type="PackedScene" uid="uid://bkwv1ialnfdh1" path="res://game_objects/missiles/rocket.tscn" id="1_5ouno"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5ouno"]
+load_path = "res://.godot/imported/material-icons.png-6be74cb80a2cde3bc234d95de85ef43f.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pq5pd"]
+atlas = SubResource("CompressedTexture2D_5ouno")
+region = Rect2(32, 48, 16, 16)
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_3terp")
+ammo_scene = ExtResource("1_5ouno")
+ammo_type = 2
+slugs_per_shot = 1
+fire_rate = 0.5
+starting_durability = 10
+display_name = "Rocket Launcher"
+icon = SubResource("AtlasTexture_pq5pd")
+metadata/_custom_type_script = "uid://cwbysqs5j2c1y"

@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://c42b4ts0st5ur"]
+
+[ext_resource type="Script" uid="uid://gkq1fvtwnxvu" path="res://ui/scripts/ammo_counter.gd" id="1_15imr"]
+
+[node name="AmmoCounter" type="PanelContainer"]
+script = ExtResource("1_15imr")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TypeLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Type"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ValueLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "100"
+horizontal_alignment = 1

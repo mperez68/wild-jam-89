@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=5 format=3 uid="uid://2n6hbs7lxyja"]
+
+[ext_resource type="PackedScene" uid="uid://d05c8tsvxbr5" path="res://game_objects/missiles/piercing_shell.tscn" id="1_b6swt"]
+[ext_resource type="Script" uid="uid://cwbysqs5j2c1y" path="res://resource_script/weapon.gd" id="2_ea5ow"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b6swt"]
+load_path = "res://.godot/imported/material-icons.png-6be74cb80a2cde3bc234d95de85ef43f.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ea5ow"]
+atlas = SubResource("CompressedTexture2D_b6swt")
+region = Rect2(32, 48, 16, 16)
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("2_ea5ow")
+ammo_scene = ExtResource("1_b6swt")
+ammo_type = 1
+slugs_per_shot = 1
+fire_rate = 0.1
+display_name = "Machine Gun"
+icon = SubResource("AtlasTexture_ea5ow")
+metadata/_custom_type_script = "uid://cwbysqs5j2c1y"

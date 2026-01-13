@@ -1,16 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://cagvwdclup530"]
+[gd_scene load_steps=10 format=3 uid="uid://cagvwdclup530"]
 
 [ext_resource type="Script" uid="uid://bepdxnv417iq3" path="res://game_objects/scripts/vehicle.gd" id="1_s6qvh"]
 [ext_resource type="Script" uid="uid://cwbysqs5j2c1y" path="res://resource_script/weapon.gd" id="2_kfl33"]
 [ext_resource type="Resource" uid="uid://ck83b7nebdapn" path="res://weapon_presets/scrap_cannon.tres" id="3_enk41"]
-[ext_resource type="Resource" uid="uid://2n6hbs7lxyja" path="res://weapon_presets/machine_gun.tres" id="4_dtrlj"]
 [ext_resource type="Texture2D" uid="uid://dvrfyhqfcnlri" path="res://assets/sprites/characters.png" id="4_duy67"]
-[ext_resource type="AudioStream" uid="uid://bah4sk850mnc3" path="res://assets/sfx/shoot.wav" id="4_enk41"]
 [ext_resource type="PackedScene" uid="uid://cclanb6au283g" path="res://ui/reticle.tscn" id="5_dtrlj"]
-[ext_resource type="AudioStream" uid="uid://cepeksdtqad8f" path="res://assets/sfx/hit.wav" id="5_duy67"]
-[ext_resource type="Resource" uid="uid://br4rbkpn57fv3" path="res://weapon_presets/rocket_launcher.tres" id="5_fdkh3"]
 [ext_resource type="Script" uid="uid://blu0tyvkmqwks" path="res://game_objects/scripts/player_controller.gd" id="6_fdkh3"]
-[ext_resource type="AudioStream" uid="uid://b2mepmcky0wpn" path="res://assets/sfx/miss.wav" id="8_fdkh3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fhp78"]
 atlas = ExtResource("4_duy67")
@@ -30,40 +25,19 @@ motion_mode = 1
 script = ExtResource("1_s6qvh")
 weapons = Dictionary[int, ExtResource("2_kfl33")]({
 0: ExtResource("3_enk41"),
-1: ExtResource("4_dtrlj"),
-2: ExtResource("5_fdkh3")
+1: null,
+2: null
 })
-ammo = Dictionary[int, int]({
-0: 100,
-1: 10000,
-2: 100
-})
-
-[node name="ShootSfx" type="AudioStreamPlayer2D" parent="."]
-unique_name_in_owner = true
-stream = ExtResource("4_enk41")
-max_polyphony = 12
-bus = &"Sfx"
-
-[node name="DamageSfx" type="AudioStreamPlayer2D" parent="."]
-unique_name_in_owner = true
-stream = ExtResource("5_duy67")
-max_polyphony = 12
-bus = &"Sfx"
-
-[node name="ScrapSfx" type="AudioStreamPlayer2D" parent="."]
-unique_name_in_owner = true
-stream = ExtResource("8_fdkh3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-scale = Vector2(2, 1.33)
+scale = Vector2(6, 4)
 texture = SubResource("AtlasTexture_fhp78")
 offset = Vector2(2, 0)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 unique_name_in_owner = true
-scale = Vector2(2, 1.33)
+scale = Vector2(6, 4)
 polygon = PackedVector2Array(-6, -8, -6, 8, 10, 8, 10, -8)
 
 [node name="CameraHolder" type="Node2D" parent="."]
@@ -71,24 +45,23 @@ unique_name_in_owner = true
 
 [node name="Camera" type="Camera2D" parent="CameraHolder"]
 unique_name_in_owner = true
-position = Vector2(140, 0)
+position = Vector2(200, 0)
 rotation = 1.5707964
 ignore_rotation = false
 enabled = false
-zoom = Vector2(2, 2)
 rotation_smoothing_enabled = true
 
 [node name="Turret" type="Node2D" parent="."]
 unique_name_in_owner = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Turret"]
-scale = Vector2(3.33, 1)
+scale = Vector2(10, 3)
 texture = SubResource("AtlasTexture_rirh6")
 offset = Vector2(2, 0)
 
 [node name="CannonEnd" type="Node2D" parent="Turret"]
 unique_name_in_owner = true
-position = Vector2(35, 0)
+position = Vector2(100, 0)
 
 [node name="ReticleContainer" type="Control" parent="."]
 unique_name_in_owner = true
@@ -103,8 +76,8 @@ grow_vertical = 2
 unique_name_in_owner = true
 modulate = Color(1, 1, 0, 1)
 layout_mode = 1
-offset_left = 300.0
-offset_right = 316.0
+offset_left = 500.0
+offset_right = 516.0
 offset_bottom = 16.0
 img_scale = Vector2(2, 2)
 

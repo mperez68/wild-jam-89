@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="It Still Runs"
-config/tags=PackedStringArray("framework")
+config/tags=PackedStringArray("game_jam")
 run/main_scene="uid://dlus41dea6h08"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
@@ -27,6 +27,7 @@ SettingsManager="*res://global/settings_manager.tscn"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/stretch/mode="viewport"
 
 [input]
 
@@ -100,3 +101,7 @@ aim_down={
 2d_physics/layer_2="wall"
 2d_physics/layer_3="tank"
 2d_physics/layer_4="missile"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

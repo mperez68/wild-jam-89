@@ -1,7 +1,7 @@
 class_name Missile extends RigidBody2D
 
 @export var speed: float = 1000.0
-@export var scatter: float = 30.0
+@export var scatter: float = 15.0
 @export var damage: int = 1
 @export var piercing: int = 0
 

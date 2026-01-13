@@ -1,9 +1,18 @@
-[gd_resource type="Resource" script_class="Weapon" load_steps=3 format=3 uid="uid://ck83b7nebdapn"]
+[gd_resource type="Resource" script_class="Weapon" load_steps=5 format=3 uid="uid://ck83b7nebdapn"]
 
+[ext_resource type="PackedScene" uid="uid://ch3sqvg870e5y" path="res://game_objects/missiles/scrap_slug.tscn" id="1_jamx8"]
 [ext_resource type="Script" uid="uid://cwbysqs5j2c1y" path="res://resource_script/weapon.gd" id="1_m2eey"]
-[ext_resource type="PackedScene" uid="uid://cd778hpcwk5yx" path="res://game_objects/missiles/missile.tscn" id="1_pfqx3"]
+[ext_resource type="Texture2D" uid="uid://bo5t1l8os3g7q" path="res://assets/sprites/material-icons.png" id="2_jamx8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwtnn"]
+atlas = ExtResource("2_jamx8")
+region = Rect2(32, 48, 16, 16)
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_m2eey")
-ammo_scene = ExtResource("1_pfqx3")
+ammo_scene = ExtResource("1_jamx8")
+starting_durability = 5000
+display_name = "Scrap Cannon"
+icon = SubResource("AtlasTexture_fwtnn")
 metadata/_custom_type_script = "uid://cwbysqs5j2c1y"

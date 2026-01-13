@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2gqkphule5ou"]
+
+[ext_resource type="Texture2D" uid="uid://bo5t1l8os3g7q" path="res://assets/sprites/material-icons.png" id="1_qmi64"]
+[ext_resource type="Script" uid="uid://b84x57k5fq8e7" path="res://ui/scripts/weapon_panel.gd" id="1_spm4l"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_spm4l"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_j8di1"]
+font_size = 12
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j8di1"]
+atlas = ExtResource("1_qmi64")
+region = Rect2(32, 48, 16, 16)
+
+[node name="WeaponPanel" type="PanelContainer"]
+script = ExtResource("1_spm4l")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Weapon Name"
+label_settings = SubResource("LabelSettings_spm4l")
+horizontal_alignment = 1
+
+[node name="SlotLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Slot"
+label_settings = SubResource("LabelSettings_j8di1")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="TypeLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Ammo"
+label_settings = SubResource("LabelSettings_spm4l")
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="IconRect" type="TextureRect" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 64)
+layout_mode = 2
+texture = SubResource("AtlasTexture_j8di1")
+stretch_mode = 3
+
+[node name="DurabilityBar" type="ProgressBar" parent="VBoxContainer/IconRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 10.0
+value = 7.0
+show_percentage = false
