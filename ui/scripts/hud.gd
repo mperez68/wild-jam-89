@@ -9,6 +9,8 @@ class_name Hud extends CanvasLayer
 	Vehicle.WeaponSlot.SECONDARY: %SecondaryPanel,
 	Vehicle.WeaponSlot.TERTIARY: %TertiaryPanel
 }
+@onready var game_hud: Control = %GameHud
+@onready var game_menu: CenterContainer = %GameMenu
 
 var player_vehicle: Vehicle
 
@@ -45,3 +47,9 @@ func _on_weapons_changed(weapons: Dictionary[Vehicle.WeaponSlot, Weapon]):
 
 
 # SIGNALS
+
+
+func _on_menu_button_pressed(show_menu: bool) -> void:
+	get_tree().paused = show_menu
+	game_hud.visible = !show_menu
+	game_menu.visible = show_menu

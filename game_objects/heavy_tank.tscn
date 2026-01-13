@@ -60,7 +60,7 @@ metadata/_custom_type_script = "uid://cwbysqs5j2c1y"
 [node name="HeavyTank" instance=ExtResource("1_s4v0t")]
 max_health = 120
 speed = 300.0
-rotate_speed = 1.0
+rotate_speed = 0.2
 hull_strength = 8
 weapons = Dictionary[int, ExtResource("2_nc4nu")]({
 0: SubResource("Resource_d2pm4"),

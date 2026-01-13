@@ -11,6 +11,7 @@ var transitioning: bool = true
 
 # PUBLIC
 func new_scene(scene: PackedScene, transition: bool = true, add_to_backstack: bool = false):
+	get_tree().paused = false
 	if add_to_backstack:
 		var packed: PackedScene = PackedScene.new()
 		packed.pack(get_tree().current_scene)

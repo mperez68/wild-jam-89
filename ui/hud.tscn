@@ -1,14 +1,40 @@
-[gd_scene load_steps=5 format=3 uid="uid://1ig2x84fpixo"]
+[gd_scene load_steps=15 format=3 uid="uid://1ig2x84fpixo"]
 
 [ext_resource type="Script" uid="uid://cffrenflp45f3" path="res://ui/scripts/hud.gd" id="1_276te"]
 [ext_resource type="Theme" uid="uid://dxyu51du6xt8k" path="res://resources/ui/menu_theme.tres" id="1_rbyyf"]
 [ext_resource type="PackedScene" uid="uid://c42b4ts0st5ur" path="res://ui/ammo_counter.tscn" id="3_546lt"]
 [ext_resource type="PackedScene" uid="uid://b2gqkphule5ou" path="res://ui/weapon_panel.tscn" id="4_7ihmi"]
+[ext_resource type="Texture2D" uid="uid://bo5t1l8os3g7q" path="res://assets/sprites/material-icons.png" id="5_en2x2"]
+[ext_resource type="LabelSettings" uid="uid://x6yphufd1ppd" path="res://resources/ui/header_settings.tres" id="6_srpbi"]
+[ext_resource type="LabelSettings" uid="uid://bgghdhgj1v8uh" path="res://resources/ui/sub_header_settings.tres" id="7_spcu4"]
+[ext_resource type="PackedScene" uid="uid://y23bf8ew2u57" path="res://ui/audio_slider.tscn" id="8_ff8ar"]
+[ext_resource type="PackedScene" uid="uid://c1iwfo7rduuxg" path="res://ui/quit_button.tscn" id="9_spcu4"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_1v5rv"]
+action = &"ui_cancel"
+
+[sub_resource type="Shortcut" id="Shortcut_q43x7"]
+events = [SubResource("InputEventAction_1v5rv")]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_srpbi"]
+atlas = ExtResource("5_en2x2")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m0eg6"]
+atlas = ExtResource("5_en2x2")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ff8ar"]
+atlas = ExtResource("5_en2x2")
+region = Rect2(48, 16, 16, 16)
 
 [node name="HUD" type="CanvasLayer"]
+process_mode = 3
 script = ExtResource("1_276te")
 
-[node name="Control" type="Control" parent="."]
+[node name="GameHud" type="Control" parent="."]
+unique_name_in_owner = true
+process_mode = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,7 +43,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_rbyyf")
 
-[node name="MarginContainer" type="MarginContainer" parent="Control"]
+[node name="MarginContainer" type="MarginContainer" parent="GameHud"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,10 +51,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Control" type="Control" parent="Control/MarginContainer"]
+[node name="Control" type="Control" parent="GameHud/MarginContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Control/MarginContainer/Control"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="GameHud/MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
@@ -38,15 +64,15 @@ grow_horizontal = 0
 grow_vertical = 2
 alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="Control/MarginContainer/Control/VBoxContainer2"]
+[node name="PanelContainer" type="PanelContainer" parent="GameHud/MarginContainer/Control/VBoxContainer2"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/Control/VBoxContainer2/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameHud/MarginContainer/Control/VBoxContainer2/PanelContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="HealthBar" type="ProgressBar" parent="Control/MarginContainer/Control/VBoxContainer2/PanelContainer/VBoxContainer"]
+[node name="HealthBar" type="ProgressBar" parent="GameHud/MarginContainer/Control/VBoxContainer2/PanelContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(25, 100)
 layout_mode = 2
@@ -55,24 +81,24 @@ value = 80.0
 fill_mode = 3
 show_percentage = false
 
-[node name="HBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/Control/VBoxContainer2/PanelContainer/VBoxContainer"]
+[node name="HBoxContainer" type="VBoxContainer" parent="GameHud/MarginContainer/Control/VBoxContainer2/PanelContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="HealthLabel" type="Label" parent="Control/MarginContainer/Control/VBoxContainer2/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="HealthLabel" type="Label" parent="GameHud/MarginContainer/Control/VBoxContainer2/PanelContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "80"
 vertical_alignment = 1
 
-[node name="SlashLabel" type="Label" parent="Control/MarginContainer/Control/VBoxContainer2/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="SlashLabel" type="Label" parent="GameHud/MarginContainer/Control/VBoxContainer2/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "/"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MaxLabel" type="Label" parent="Control/MarginContainer/Control/VBoxContainer2/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="MaxLabel" type="Label" parent="GameHud/MarginContainer/Control/VBoxContainer2/PanelContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -80,27 +106,27 @@ text = "100"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="PanelContainer2" type="PanelContainer" parent="Control/MarginContainer/Control/VBoxContainer2"]
+[node name="PanelContainer2" type="PanelContainer" parent="GameHud/MarginContainer/Control/VBoxContainer2"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/Control/VBoxContainer2/PanelContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameHud/MarginContainer/Control/VBoxContainer2/PanelContainer2"]
 layout_mode = 2
 
-[node name="ScrapCount" parent="Control/MarginContainer/Control/VBoxContainer2/PanelContainer2/VBoxContainer" instance=ExtResource("3_546lt")]
+[node name="ScrapCount" parent="GameHud/MarginContainer/Control/VBoxContainer2/PanelContainer2/VBoxContainer" instance=ExtResource("3_546lt")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="BulletCount" parent="Control/MarginContainer/Control/VBoxContainer2/PanelContainer2/VBoxContainer" instance=ExtResource("3_546lt")]
+[node name="BulletCount" parent="GameHud/MarginContainer/Control/VBoxContainer2/PanelContainer2/VBoxContainer" instance=ExtResource("3_546lt")]
 unique_name_in_owner = true
 layout_mode = 2
 type = 1
 
-[node name="RocketCount" parent="Control/MarginContainer/Control/VBoxContainer2/PanelContainer2/VBoxContainer" instance=ExtResource("3_546lt")]
+[node name="RocketCount" parent="GameHud/MarginContainer/Control/VBoxContainer2/PanelContainer2/VBoxContainer" instance=ExtResource("3_546lt")]
 unique_name_in_owner = true
 layout_mode = 2
 type = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameHud/MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -108,16 +134,101 @@ offset_right = 144.0
 grow_vertical = 2
 alignment = 1
 
-[node name="PrimaryPanel" parent="Control/MarginContainer/Control/VBoxContainer" instance=ExtResource("4_7ihmi")]
+[node name="PrimaryPanel" parent="GameHud/MarginContainer/Control/VBoxContainer" instance=ExtResource("4_7ihmi")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="SecondaryPanel" parent="Control/MarginContainer/Control/VBoxContainer" instance=ExtResource("4_7ihmi")]
+[node name="SecondaryPanel" parent="GameHud/MarginContainer/Control/VBoxContainer" instance=ExtResource("4_7ihmi")]
 unique_name_in_owner = true
 layout_mode = 2
 slot = 1
 
-[node name="TertiaryPanel" parent="Control/MarginContainer/Control/VBoxContainer" instance=ExtResource("4_7ihmi")]
+[node name="TertiaryPanel" parent="GameHud/MarginContainer/Control/VBoxContainer" instance=ExtResource("4_7ihmi")]
 unique_name_in_owner = true
 layout_mode = 2
 slot = 2
+
+[node name="MenuButton" type="Button" parent="GameHud/MarginContainer/Control"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+offset_right = 24.0
+grow_vertical = 0
+scale = Vector2(2, 2)
+shortcut = SubResource("Shortcut_q43x7")
+icon = SubResource("AtlasTexture_srpbi")
+icon_alignment = 1
+
+[node name="GameMenu" type="CenterContainer" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_rbyyf")
+
+[node name="PanelContainer" type="PanelContainer" parent="GameMenu"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameMenu/PanelContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="GameMenu/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "OPTIONS"
+label_settings = ExtResource("6_srpbi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MasterLabel" type="Label" parent="GameMenu/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Master"
+label_settings = ExtResource("7_spcu4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioSlider" parent="GameMenu/PanelContainer/VBoxContainer" instance=ExtResource("8_ff8ar")]
+layout_mode = 2
+
+[node name="MusicLabel" type="Label" parent="GameMenu/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Music"
+label_settings = ExtResource("7_spcu4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioSlider2" parent="GameMenu/PanelContainer/VBoxContainer" instance=ExtResource("8_ff8ar")]
+layout_mode = 2
+bus = "Music"
+
+[node name="SfxLabel" type="Label" parent="GameMenu/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sfx"
+label_settings = ExtResource("7_spcu4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioSlider3" parent="GameMenu/PanelContainer/VBoxContainer" instance=ExtResource("8_ff8ar")]
+layout_mode = 2
+bus = "Sfx"
+
+[node name="ReturnButton" type="Button" parent="GameMenu/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "RETURN"
+icon = SubResource("AtlasTexture_m0eg6")
+
+[node name="QuitButton" parent="GameMenu/PanelContainer/VBoxContainer" instance=ExtResource("9_spcu4")]
+layout_mode = 2
+text = "Back"
+icon = SubResource("AtlasTexture_ff8ar")
+back = true
+
+[connection signal="pressed" from="GameHud/MarginContainer/Control/MenuButton" to="." method="_on_menu_button_pressed" binds= [true]]
+[connection signal="pressed" from="GameMenu/PanelContainer/VBoxContainer/ReturnButton" to="." method="_on_menu_button_pressed" binds= [false]]

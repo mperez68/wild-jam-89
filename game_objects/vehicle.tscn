@@ -1,14 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://cagvwdclup530"]
+[gd_scene load_steps=13 format=3 uid="uid://cagvwdclup530"]
 
 [ext_resource type="Script" uid="uid://bepdxnv417iq3" path="res://game_objects/scripts/vehicle.gd" id="1_s6qvh"]
 [ext_resource type="Script" uid="uid://cwbysqs5j2c1y" path="res://resource_script/weapon.gd" id="2_kfl33"]
 [ext_resource type="Resource" uid="uid://ck83b7nebdapn" path="res://weapon_presets/scrap_cannon.tres" id="3_enk41"]
-[ext_resource type="Resource" uid="uid://2n6hbs7lxyja" path="res://weapon_presets/machine_gun.tres" id="4_dtrlj"]
 [ext_resource type="Texture2D" uid="uid://dvrfyhqfcnlri" path="res://assets/sprites/characters.png" id="4_duy67"]
 [ext_resource type="AudioStream" uid="uid://bah4sk850mnc3" path="res://assets/sfx/shoot.wav" id="4_enk41"]
 [ext_resource type="PackedScene" uid="uid://cclanb6au283g" path="res://ui/reticle.tscn" id="5_dtrlj"]
 [ext_resource type="AudioStream" uid="uid://cepeksdtqad8f" path="res://assets/sfx/hit.wav" id="5_duy67"]
-[ext_resource type="Resource" uid="uid://br4rbkpn57fv3" path="res://weapon_presets/rocket_launcher.tres" id="5_fdkh3"]
 [ext_resource type="Script" uid="uid://blu0tyvkmqwks" path="res://game_objects/scripts/player_controller.gd" id="6_fdkh3"]
 [ext_resource type="AudioStream" uid="uid://b2mepmcky0wpn" path="res://assets/sfx/miss.wav" id="8_fdkh3"]
 
@@ -29,9 +27,9 @@ collision_mask = 7
 motion_mode = 1
 script = ExtResource("1_s6qvh")
 weapons = Dictionary[int, ExtResource("2_kfl33")]({
-0: ExtResource("3_enk41"),
-1: ExtResource("4_dtrlj"),
-2: ExtResource("5_fdkh3")
+0: null,
+1: null,
+2: ExtResource("3_enk41")
 })
 ammo = Dictionary[int, int]({
 0: 100,
