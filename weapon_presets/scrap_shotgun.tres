@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=5 format=3 uid="uid://bmcdu5bllx68u"]
+
+[ext_resource type="PackedScene" uid="uid://ch3sqvg870e5y" path="res://game_objects/missiles/scrap_slug.tscn" id="1_hy2jg"]
+[ext_resource type="Texture2D" uid="uid://bo5t1l8os3g7q" path="res://assets/sprites/material-icons.png" id="2_b02t6"]
+[ext_resource type="Script" uid="uid://cwbysqs5j2c1y" path="res://resource_script/weapon.gd" id="3_hxsv4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwtnn"]
+atlas = ExtResource("2_b02t6")
+region = Rect2(32, 48, 16, 16)
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("3_hxsv4")
+ammo_scene = ExtResource("1_hy2jg")
+slugs_per_shot = 3
+fire_rate = 0.75
+starting_durability = 5000
+loot_value = 100
+display_name = "Scrap Shotgun"
+icon = SubResource("AtlasTexture_fwtnn")
+metadata/_custom_type_script = "uid://cwbysqs5j2c1y"

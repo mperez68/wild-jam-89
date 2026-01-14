@@ -1,64 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://c7sn0srwusylk"]
+[gd_scene load_steps=5 format=3 uid="uid://c7sn0srwusylk"]
 
 [ext_resource type="PackedScene" uid="uid://cagvwdclup530" path="res://game_objects/vehicle.tscn" id="1_4xyd0"]
 [ext_resource type="Script" uid="uid://cwbysqs5j2c1y" path="res://resource_script/weapon.gd" id="2_ms3dp"]
-[ext_resource type="PackedScene" uid="uid://ch3sqvg870e5y" path="res://game_objects/missiles/scrap_slug.tscn" id="3_6vr7e"]
-[ext_resource type="Texture2D" uid="uid://bo5t1l8os3g7q" path="res://assets/sprites/material-icons.png" id="4_03y1e"]
-[ext_resource type="PackedScene" uid="uid://d05c8tsvxbr5" path="res://game_objects/missiles/piercing_shell.tscn" id="5_3e1ur"]
-[ext_resource type="PackedScene" uid="uid://bkwv1ialnfdh1" path="res://game_objects/missiles/rocket.tscn" id="6_kcgjd"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fwtnn"]
-atlas = ExtResource("4_03y1e")
-region = Rect2(32, 48, 16, 16)
-
-[sub_resource type="Resource" id="Resource_tjfv0"]
-resource_local_to_scene = true
-script = ExtResource("2_ms3dp")
-ammo_scene = ExtResource("3_6vr7e")
-starting_durability = 5000
-display_name = "Scrap Cannon"
-icon = SubResource("AtlasTexture_fwtnn")
-metadata/_custom_type_script = "uid://cwbysqs5j2c1y"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b6swt"]
-load_path = "res://.godot/imported/material-icons.png-6be74cb80a2cde3bc234d95de85ef43f.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ea5ow"]
-atlas = SubResource("CompressedTexture2D_b6swt")
-region = Rect2(32, 48, 16, 16)
-
-[sub_resource type="Resource" id="Resource_mcryw"]
-resource_local_to_scene = true
-script = ExtResource("2_ms3dp")
-ammo_scene = ExtResource("5_3e1ur")
-ammo_type = 1
-slugs_per_shot = 1
-fire_rate = 0.1
-display_name = "Machine Gun"
-icon = SubResource("AtlasTexture_ea5ow")
-metadata/_custom_type_script = "uid://cwbysqs5j2c1y"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5ouno"]
-load_path = "res://.godot/imported/material-icons.png-6be74cb80a2cde3bc234d95de85ef43f.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pq5pd"]
-atlas = SubResource("CompressedTexture2D_5ouno")
-region = Rect2(32, 48, 16, 16)
-
-[sub_resource type="Resource" id="Resource_20jw7"]
-resource_local_to_scene = true
-script = ExtResource("2_ms3dp")
-ammo_scene = ExtResource("6_kcgjd")
-ammo_type = 2
-slugs_per_shot = 1
-fire_rate = 0.5
-starting_durability = 10
-display_name = "Rocket Launcher"
-icon = SubResource("AtlasTexture_pq5pd")
-metadata/_custom_type_script = "uid://cwbysqs5j2c1y"
+[ext_resource type="Resource" uid="uid://ck83b7nebdapn" path="res://weapon_presets/scrap_cannon.tres" id="3_hcwxc"]
+[ext_resource type="Resource" uid="uid://br4rbkpn57fv3" path="res://weapon_presets/rocket_launcher.tres" id="3_v52iu"]
 
 [node name="Buggy" instance=ExtResource("1_4xyd0")]
-max_health = 50
+max_health = 75
 speed = 750.0
 rotate_speed = 2.2
 turret_speed = 5.0
@@ -66,7 +14,7 @@ friction = 0.96
 reverse_multiplier = 0.7
 hull_strength = 0
 weapons = Dictionary[int, ExtResource("2_ms3dp")]({
-0: SubResource("Resource_tjfv0"),
-1: SubResource("Resource_mcryw"),
-2: SubResource("Resource_20jw7")
+0: null,
+1: ExtResource("3_v52iu"),
+2: ExtResource("3_hcwxc")
 })

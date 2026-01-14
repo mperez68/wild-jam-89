@@ -19,7 +19,6 @@ contact_monitor = true
 max_contacts_reported = 3
 linear_velocity = Vector2(1000, 0)
 script = ExtResource("1_w4ufq")
-speed = 1500.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_w4ufq")

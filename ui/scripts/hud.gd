@@ -16,6 +16,8 @@ var player_vehicle: Vehicle
 
 
 # ENGINE
+func _ready() -> void:
+	show()
 
 
 # PUBLIC

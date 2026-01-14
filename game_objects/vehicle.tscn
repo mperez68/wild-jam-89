@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cagvwdclup530"]
+[gd_scene load_steps=15 format=3 uid="uid://cagvwdclup530"]
 
 [ext_resource type="Script" uid="uid://bepdxnv417iq3" path="res://game_objects/scripts/vehicle.gd" id="1_s6qvh"]
 [ext_resource type="Script" uid="uid://cwbysqs5j2c1y" path="res://resource_script/weapon.gd" id="2_kfl33"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://cepeksdtqad8f" path="res://assets/sfx/hit.wav" id="5_duy67"]
 [ext_resource type="Script" uid="uid://blu0tyvkmqwks" path="res://game_objects/scripts/player_controller.gd" id="6_fdkh3"]
 [ext_resource type="AudioStream" uid="uid://b2mepmcky0wpn" path="res://assets/sfx/miss.wav" id="8_fdkh3"]
+[ext_resource type="Script" uid="uid://byg63mot5cu5a" path="res://game_objects/scripts/ai_controller.gd" id="10_dtrlj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fhp78"]
 atlas = ExtResource("4_duy67")
@@ -20,6 +21,9 @@ load_path = "res://.godot/imported/characters.png-d6ffa84ab3fa37930dc801b0af6f49
 [sub_resource type="AtlasTexture" id="AtlasTexture_rirh6"]
 atlas = SubResource("CompressedTexture2D_buk82")
 region = Rect2(3, 19, 10, 10)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dtrlj"]
+radius = 500.0
 
 [node name="Vehicle" type="CharacterBody2D"]
 collision_layer = 4
@@ -145,7 +149,26 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 script = ExtResource("6_fdkh3")
 
+[node name="AIController" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("10_dtrlj")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+unique_name_in_owner = true
+avoidance_enabled = true
+radius = 128.0
+
+[node name="AggroRadius" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 7
+audio_bus_name = &"Sfx"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AggroRadius"]
+shape = SubResource("CircleShape2D_dtrlj")
+
 [connection signal="died" from="." to="." method="_on_died"]
 [connection signal="timeout" from="PrimaryWeaponTimer" to="." method="_on_fire" binds= [0]]
 [connection signal="timeout" from="SecondaryWeaponTimer" to="." method="_on_fire" binds= [1]]
 [connection signal="timeout" from="TertiaryWeaponTimer" to="." method="_on_fire" binds= [2]]
+[connection signal="body_entered" from="AggroRadius" to="." method="_on_aggro_radius_body" binds= [true]]
+[connection signal="body_exited" from="AggroRadius" to="." method="_on_aggro_radius_body" binds= [false]]

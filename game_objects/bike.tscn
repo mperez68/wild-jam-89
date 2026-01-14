@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://buiuphr4larfi"]
+
+[ext_resource type="PackedScene" uid="uid://cagvwdclup530" path="res://game_objects/vehicle.tscn" id="1_lnfob"]
+[ext_resource type="Script" uid="uid://cwbysqs5j2c1y" path="res://resource_script/weapon.gd" id="2_vry11"]
+[ext_resource type="Resource" uid="uid://bmcdu5bllx68u" path="res://weapon_presets/scrap_shotgun.tres" id="3_lnfob"]
+[ext_resource type="Texture2D" uid="uid://dvrfyhqfcnlri" path="res://assets/sprites/characters.png" id="5_vry11"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_clra0"]
+atlas = ExtResource("5_vry11")
+region = Rect2(0, 0, 16, 16)
+
+[node name="Bike" instance=ExtResource("1_lnfob")]
+max_health = 20
+speed = 750.0
+rotate_speed = 1.5
+turret_speed = 0.5
+friction = 0.96
+hull_strength = 0
+weapons = Dictionary[int, ExtResource("2_vry11")]({
+0: null,
+1: null,
+2: ExtResource("3_lnfob")
+})
+ammo = Dictionary[int, int]({
+0: 500,
+1: 0,
+2: 0
+})
+
+[node name="Sprite2D" parent="." index="3"]
+position = Vector2(6.200001, 0)
+scale = Vector2(1.5, 0.75)
+texture = SubResource("AtlasTexture_clra0")
+
+[node name="CollisionPolygon2D" parent="." index="4"]
+position = Vector2(6.200001, 0)
+scale = Vector2(1.5, 0.8)

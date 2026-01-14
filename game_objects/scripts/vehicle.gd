@@ -8,7 +8,7 @@ signal weapons_changed(weapons: Dictionary[WeaponSlot, Weapon])
 enum WeaponSlot{ PRIMARY, SECONDARY, TERTIARY }
 
 const COLLISION_DAMAGE: int = 10
-const COLLISION_SPEED: float = 150.0
+#const COLLISION_SPEED: float = 150.0
 const MINIMUM_DAMAGE: int = 1
 
 @onready var shoot_sfx: AudioStreamPlayer2D = %ShootSfx
@@ -21,6 +21,7 @@ const MINIMUM_DAMAGE: int = 1
 @onready var aim_target: Reticle = %AimTarget
 @onready var cannon_end: Node2D = %CannonEnd
 @onready var reticle_container: Control = %ReticleContainer
+@onready var nav: NavigationAgent2D = %NavigationAgent2D
 @onready var line: Array[Control] = [ %Reticle, %Line, %Line2, %Line3 ]
 @onready var rotation_nodes: Array[Node] = [ %Sprite2D, %CollisionPolygon2D, %CameraHolder,
 											%Reticle, %Line, %Line2, %Line3 ]
@@ -73,6 +74,8 @@ var steer_rotation: float = 0:
 var dead: bool:
 	get():
 		return health <= 0
+var targets: Array[Vehicle] = []
+
 
 # ENGINE
 func _ready() -> void:
@@ -100,16 +103,16 @@ func _physics_process(delta: float) -> void:
 	var lateral_acceleration: float = move_vector.y * speed * delta
 	velocity += (Vector2(lateral_acceleration, 0) * (1.0 if lateral_acceleration > 0 else reverse_multiplier)).rotated(steer_rotation)
 	velocity *= friction
-	var collide := move_and_collide(velocity * delta, true)
-	if collide:
-		if velocity.length() > COLLISION_SPEED:
-			damage(COLLISION_DAMAGE, 0)
-			velocity = -velocity
-			if collide.get_collider() is Vehicle:
-				collide.get_collider().damage(COLLISION_DAMAGE, 0)
-				collide.get_collider().velocity += -velocity
-		else:
-			velocity = velocity / 2
+	var _collide := move_and_collide(velocity * delta, true)
+	#if collide:
+		#if velocity.length() > COLLISION_SPEED:
+			#damage(COLLISION_DAMAGE, 0)
+			#velocity = -velocity
+			#if collide.get_collider() is Vehicle:
+				#collide.get_collider().damage(COLLISION_DAMAGE, 0)
+				#collide.get_collider().velocity += -velocity
+		#else:
+			#velocity = velocity / 2
 	move_and_slide()
 
 
@@ -131,6 +134,16 @@ func damage(value: int, piercing: int):
 	received_damage.emit(total_damage, health)
 	damage_sfx.play()
 
+func fire_all(start: bool = true):
+	for key in weapons.keys():
+		if weapons[key]:
+			if start and weapon_timers[key].is_stopped():
+				print(weapon_timers[key].is_stopped())
+				weapon_timers[key].start(weapons[key].fire_rate)
+				_on_fire(key)
+			elif !start:
+				weapon_timers[key].stop()
+
 
 # PRIVATE
 func _on_fire(slot: WeaponSlot):
@@ -145,6 +158,7 @@ func _on_fire(slot: WeaponSlot):
 				add_sibling(missile)
 				shoot_sfx.play()
 			else:
+				weapon_timers[slot].stop()
 				print("no ammo")
 		if weapons[slot].remaining_durability <= 0:
 			ammo[Weapon.AmmoType.SCRAP] += weapons[slot].loot_value
@@ -169,3 +183,10 @@ func _on_died() -> void:
 	collision_layer = 0
 	collision_mask = 0
 	print("dead")
+
+func _on_aggro_radius_body(body: Node2D, entered: bool) -> void:
+	if body is Vehicle and body != self:
+		if entered:
+			targets.push_back(body)
+		else:
+			targets.erase(body)
