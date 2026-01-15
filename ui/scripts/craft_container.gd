@@ -35,6 +35,11 @@ signal updated
 	set(value):
 		item_slot = value
 		update()
+@export_category("Textures")
+@export var scrap_texture: Texture
+@export var bullets_texture: Texture
+@export var rockets_texture: Texture
+@export var repair_texture: Texture
 
 var player_vehicle: Vehicle
 
@@ -53,8 +58,18 @@ func update(vehicle: Vehicle = null, emit: bool = true):
 		player_vehicle = vehicle
 	if reward > 0:
 		reward_label.text = str("%s\n%s" % [reward, Weapon.AmmoType.keys()[reward_type]])
+		var new_texture: Texture
+		match reward_type:
+			Weapon.AmmoType.SCRAP:
+				new_texture = scrap_texture
+			Weapon.AmmoType.BULLETS:
+				new_texture = bullets_texture
+			Weapon.AmmoType.ROCKETS:
+				new_texture = rockets_texture
+		icon_rect.texture = new_texture
 	elif healing > 0:
 		reward_label.text = str("%s\nHealing" % [healing])
+		icon_rect.texture = repair_texture
 	else:
 		reward_label.text = ""
 	if item_reward:

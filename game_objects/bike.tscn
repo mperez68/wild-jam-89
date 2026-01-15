@@ -19,8 +19,8 @@ weapons = Dictionary[int, ExtResource("2_vry11")]({
 })
 ammo = Dictionary[int, int]({
 0: 200,
-1: 250,
-2: 5
+1: 0,
+2: 0
 })
 
 [node name="Sprite2D" parent="." index="1"]

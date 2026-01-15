@@ -190,6 +190,8 @@ func on_died_deferred() -> void:
 	%CollisionPolygon2D.disabled = true
 	var pickup: Pickup = PICKUP.instantiate()
 	var rnd: Weapon.AmmoType = ammo.keys().pick_random()
+	if ammo[rnd] <= 0:
+		rnd = Weapon.AmmoType.SCRAP
 	pickup.position = position
 	match rnd:
 		Weapon.AmmoType.SCRAP:
