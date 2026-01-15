@@ -13,7 +13,6 @@ resource_local_to_scene = true
 script = ExtResource("3_hxsv4")
 ammo_scene = ExtResource("1_hy2jg")
 slugs_per_shot = 3
-fire_rate = 0.75
 starting_durability = 5000
 loot_value = 100
 display_name = "Scrap Shotgun"

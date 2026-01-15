@@ -31,6 +31,7 @@ enum Type{ SCRAP, BULLETS, ROCKETS, REPAIR }
 # ENGINE
 func _ready():
 	type = type
+	rotation_degrees = randf_range(0, 359)
 
 
 # PUBLIC
@@ -52,5 +53,4 @@ func _on_body_entered(body: Node2D) -> void:
 			Type.REPAIR:
 				body.health = min(body.max_health, body.health + value)
 		body.ammo_changed.emit(body.ammo)
-		body.received_damage.emit(-value, body.health)
 		queue_free()

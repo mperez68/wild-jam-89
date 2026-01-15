@@ -6,10 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://dr2rgqrvo1fwc" path="res://assets/source/bike.png" id="4_lnfob"]
 
 [node name="Bike" instance=ExtResource("1_lnfob")]
-max_health = 20
+max_health = 5
 speed = 750.0
 rotate_speed = 1.5
-turret_speed = 0.5
+turret_speed = 0.8
 friction = 0.96
 hull_strength = 0
 weapons = Dictionary[int, ExtResource("2_vry11")]({
@@ -18,9 +18,9 @@ weapons = Dictionary[int, ExtResource("2_vry11")]({
 2: ExtResource("3_lnfob")
 })
 ammo = Dictionary[int, int]({
-0: 500,
-1: 0,
-2: 0
+0: 200,
+1: 250,
+2: 5
 })
 
 [node name="Sprite2D" parent="." index="1"]

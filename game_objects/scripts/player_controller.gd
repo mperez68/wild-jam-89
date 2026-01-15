@@ -7,14 +7,14 @@ func _ready() -> void:
 		vehicle = get_parent()
 
 func _process(_delta: float) -> void:
-	if !vehicle or vehicle.dead:
+	if !vehicle or vehicle.dead or vehicle.locked:
 		return
 	# Turrets
 	var mouse_position: Vector2 = vehicle.get_local_mouse_position()
 	if mouse_position != Vector2.ZERO and _is_mouse_in_viewport():
 		vehicle.aim_target.position = mouse_position
 
-func _input(event: InputEvent) -> void:	# TODO move to player controller
+func _input(event: InputEvent) -> void:	
 	if !vehicle or vehicle.dead:
 		return
 	# Movement

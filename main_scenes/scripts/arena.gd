@@ -42,3 +42,6 @@ func _ready() -> void:
 
 
 # SIGNALS
+func _on_shop_body_entered(body: Node2D, show_shop: bool = true) -> void:
+	if body is Vehicle and body.is_player:
+		hud.on_shop_button_pressed(show_shop)

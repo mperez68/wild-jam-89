@@ -1,0 +1,218 @@
+[gd_scene load_steps=17 format=3 uid="uid://bdsivl5fxaeij"]
+
+[ext_resource type="Theme" uid="uid://dxyu51du6xt8k" path="res://resources/ui/menu_theme.tres" id="1_ufxu8"]
+[ext_resource type="LabelSettings" uid="uid://bgghdhgj1v8uh" path="res://resources/ui/sub_header_settings.tres" id="2_g03ap"]
+[ext_resource type="Script" uid="uid://diokrkvrrwc07" path="res://ui/scripts/shop_hud.gd" id="2_n5ltd"]
+[ext_resource type="PackedScene" uid="uid://stfa6bxefldg" path="res://resources/ui/craft_container.tscn" id="3_g03ap"]
+[ext_resource type="PackedScene" uid="uid://dynic8aip3myr" path="res://ui/sfx_button.tscn" id="3_n5ltd"]
+[ext_resource type="PackedScene" uid="uid://d05c8tsvxbr5" path="res://game_objects/missiles/piercing_shell.tscn" id="5_jg6x1"]
+[ext_resource type="Texture2D" uid="uid://bo5t1l8os3g7q" path="res://assets/sprites/material-icons.png" id="5_n5ltd"]
+[ext_resource type="Script" uid="uid://cwbysqs5j2c1y" path="res://resource_script/weapon.gd" id="6_5obgx"]
+[ext_resource type="PackedScene" uid="uid://bkwv1ialnfdh1" path="res://game_objects/missiles/rocket.tscn" id="7_oxnn1"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b6swt"]
+load_path = "res://.godot/imported/material-icons.png-6be74cb80a2cde3bc234d95de85ef43f.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ea5ow"]
+atlas = SubResource("CompressedTexture2D_b6swt")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="Resource" id="Resource_jg6x1"]
+resource_local_to_scene = true
+script = ExtResource("6_5obgx")
+ammo_scene = ExtResource("5_jg6x1")
+ammo_type = 1
+slugs_per_shot = 1
+fire_rate = 0.1
+display_name = "Machine Gun"
+icon = SubResource("AtlasTexture_ea5ow")
+metadata/_custom_type_script = "uid://cwbysqs5j2c1y"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5ouno"]
+load_path = "res://.godot/imported/material-icons.png-6be74cb80a2cde3bc234d95de85ef43f.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pq5pd"]
+atlas = SubResource("CompressedTexture2D_5ouno")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="Resource" id="Resource_5obgx"]
+resource_local_to_scene = true
+script = ExtResource("6_5obgx")
+ammo_scene = ExtResource("7_oxnn1")
+ammo_type = 2
+slugs_per_shot = 1
+fire_rate = 0.5
+starting_durability = 10
+display_name = "Rocket Launcher"
+icon = SubResource("AtlasTexture_pq5pd")
+metadata/_custom_type_script = "uid://cwbysqs5j2c1y"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mink4"]
+atlas = ExtResource("5_n5ltd")
+region = Rect2(32, 16, 16, 16)
+
+[node name="ShopHUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ufxu8")
+script = ExtResource("2_n5ltd")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="TitlePanel" type="PanelContainer" parent="MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/TitlePanel"]
+layout_mode = 2
+text = "Scrap Forge"
+label_settings = ExtResource("2_g03ap")
+horizontal_alignment = 1
+
+[node name="CraftPanel" type="PanelContainer" parent="MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CraftGrid" type="GridContainer" parent="MarginContainer/CenterContainer/VBoxContainer/CraftPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 4
+
+[node name="CraftContainer" parent="MarginContainer/CenterContainer/VBoxContainer/CraftPanel/CraftGrid" instance=ExtResource("3_g03ap")]
+layout_mode = 2
+cost = 10
+reward = 50
+reward_type = 1
+
+[node name="CraftContainer2" parent="MarginContainer/CenterContainer/VBoxContainer/CraftPanel/CraftGrid" instance=ExtResource("3_g03ap")]
+layout_mode = 2
+cost = 50
+reward = 5
+reward_type = 2
+
+[node name="CraftContainer3" parent="MarginContainer/CenterContainer/VBoxContainer/CraftPanel/CraftGrid" instance=ExtResource("3_g03ap")]
+layout_mode = 2
+cost = 50
+cost_type = 1
+reward = 5
+
+[node name="CraftContainer4" parent="MarginContainer/CenterContainer/VBoxContainer/CraftPanel/CraftGrid" instance=ExtResource("3_g03ap")]
+layout_mode = 2
+cost = 5
+cost_type = 2
+reward = 25
+
+[node name="CraftContainer7" parent="MarginContainer/CenterContainer/VBoxContainer/CraftPanel/CraftGrid" instance=ExtResource("3_g03ap")]
+layout_mode = 2
+cost = 10
+healing = 5
+
+[node name="CraftContainer8" parent="MarginContainer/CenterContainer/VBoxContainer/CraftPanel/CraftGrid" instance=ExtResource("3_g03ap")]
+layout_mode = 2
+cost = 50
+healing = 25
+
+[node name="CraftContainer5" parent="MarginContainer/CenterContainer/VBoxContainer/CraftPanel/CraftGrid" instance=ExtResource("3_g03ap")]
+layout_mode = 2
+cost = 250
+item_reward = SubResource("Resource_jg6x1")
+item_slot = 1
+
+[node name="CraftContainer6" parent="MarginContainer/CenterContainer/VBoxContainer/CraftPanel/CraftGrid" instance=ExtResource("3_g03ap")]
+layout_mode = 2
+cost = 500
+item_reward = SubResource("Resource_5obgx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="ScrapValueLabel" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+[node name="ScrapLabel" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+text = " Scrap"
+
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/PanelContainer2"]
+layout_mode = 2
+
+[node name="BulletsValueLabel" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+[node name="BulletsLabel" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer"]
+layout_mode = 2
+text = " Bullets"
+
+[node name="PanelContainer3" type="PanelContainer" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/PanelContainer3"]
+layout_mode = 2
+
+[node name="RocketsValueLabel" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+[node name="RocketsLabel" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer"]
+layout_mode = 2
+text = " Rockets"
+
+[node name="PanelContainer4" type="PanelContainer" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/PanelContainer4"]
+layout_mode = 2
+
+[node name="HealthLabel" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/PanelContainer4/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "###"
+
+[node name="Label2" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/PanelContainer4/HBoxContainer"]
+layout_mode = 2
+text = "/"
+
+[node name="MaxLabel" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/PanelContainer4/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "###"
+
+[node name="ButtonPanel" type="PanelContainer" parent="MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ReturnButton" parent="MarginContainer/CenterContainer/VBoxContainer/ButtonPanel" instance=ExtResource("3_n5ltd")]
+layout_mode = 2
+text = "DONE"
+icon = SubResource("AtlasTexture_mink4")
+expand_icon = true
+
+[connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/ButtonPanel/ReturnButton" to="." method="_on_return_button_pressed"]

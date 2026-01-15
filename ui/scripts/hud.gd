@@ -11,6 +11,7 @@ class_name Hud extends CanvasLayer
 }
 @onready var game_hud: Control = %GameHud
 @onready var game_menu: CenterContainer = %GameMenu
+@onready var shop_hud: ShopHud = %ShopHUD
 
 var player_vehicle: Vehicle
 
@@ -21,15 +22,20 @@ func _ready() -> void:
 
 
 # PUBLIC
+func on_shop_button_pressed(show_shop: bool = true):
+	game_hud.visible = !show_shop
+	shop_hud.visible = show_shop
+	player_vehicle.locked = show_shop
+
 func set_player(vehicle: Vehicle):
 	player_vehicle = vehicle
-	health_bar.value = vehicle.health
-	health_label.text = str(vehicle.health)
+	shop_hud.set_player(vehicle)
 	health_bar.max_value = vehicle.max_health
 	max_label.text = str(vehicle.max_health)
 	player_vehicle.received_damage.connect(_on_received_damage)
 	player_vehicle.ammo_changed.connect(_on_ammo_changed)
 	player_vehicle.weapons_changed.connect(_on_weapons_changed)
+	_on_received_damage(0, vehicle.health)
 	_on_ammo_changed(player_vehicle.ammo)
 	_on_weapons_changed(player_vehicle.weapons)
 
@@ -49,8 +55,6 @@ func _on_weapons_changed(weapons: Dictionary[Vehicle.WeaponSlot, Weapon]):
 
 
 # SIGNALS
-
-
 func _on_menu_button_pressed(show_menu: bool) -> void:
 	get_tree().paused = show_menu
 	game_hud.visible = !show_menu

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://1ig2x84fpixo"]
+[gd_scene load_steps=16 format=3 uid="uid://1ig2x84fpixo"]
 
 [ext_resource type="Script" uid="uid://cffrenflp45f3" path="res://ui/scripts/hud.gd" id="1_276te"]
 [ext_resource type="Theme" uid="uid://dxyu51du6xt8k" path="res://resources/ui/menu_theme.tres" id="1_rbyyf"]
@@ -9,6 +9,7 @@
 [ext_resource type="LabelSettings" uid="uid://bgghdhgj1v8uh" path="res://resources/ui/sub_header_settings.tres" id="7_spcu4"]
 [ext_resource type="PackedScene" uid="uid://y23bf8ew2u57" path="res://ui/audio_slider.tscn" id="8_ff8ar"]
 [ext_resource type="PackedScene" uid="uid://c1iwfo7rduuxg" path="res://ui/quit_button.tscn" id="9_spcu4"]
+[ext_resource type="PackedScene" uid="uid://bdsivl5fxaeij" path="res://resources/ui/shop_hud.tscn" id="10_ff8ar"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_1v5rv"]
 action = &"ui_cancel"
@@ -230,5 +231,10 @@ text = "Back"
 icon = SubResource("AtlasTexture_ff8ar")
 back = true
 
+[node name="ShopHUD" parent="." instance=ExtResource("10_ff8ar")]
+unique_name_in_owner = true
+visible = false
+
 [connection signal="pressed" from="GameHud/MarginContainer/Control/MenuButton" to="." method="_on_menu_button_pressed" binds= [true]]
 [connection signal="pressed" from="GameMenu/PanelContainer/VBoxContainer/ReturnButton" to="." method="_on_menu_button_pressed" binds= [false]]
+[connection signal="shop_closed" from="ShopHUD" to="." method="on_shop_button_pressed" binds= [false]]

@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c7sn0srwusylk"]
+[gd_scene load_steps=5 format=3 uid="uid://c7sn0srwusylk"]
 
 [ext_resource type="PackedScene" uid="uid://cagvwdclup530" path="res://game_objects/vehicle.tscn" id="1_4xyd0"]
 [ext_resource type="Script" uid="uid://cwbysqs5j2c1y" path="res://resource_script/weapon.gd" id="2_ms3dp"]
 [ext_resource type="Resource" uid="uid://ck83b7nebdapn" path="res://weapon_presets/scrap_cannon.tres" id="3_hcwxc"]
-[ext_resource type="Resource" uid="uid://br4rbkpn57fv3" path="res://weapon_presets/rocket_launcher.tres" id="3_v52iu"]
 [ext_resource type="Texture2D" uid="uid://l8a0nmw6ssk2" path="res://assets/source/buggy.png" id="5_s4fbh"]
 
 [node name="Buggy" instance=ExtResource("1_4xyd0")]
@@ -16,8 +15,13 @@ reverse_multiplier = 0.7
 hull_strength = 0
 weapons = Dictionary[int, ExtResource("2_ms3dp")]({
 0: null,
-1: ExtResource("3_v52iu"),
+1: null,
 2: ExtResource("3_hcwxc")
+})
+ammo = Dictionary[int, int]({
+0: 100,
+1: 500,
+2: 0
 })
 
 [node name="Sprite2D" parent="." index="1"]

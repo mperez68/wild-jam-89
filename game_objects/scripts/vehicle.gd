@@ -32,6 +32,7 @@ const MINIMUM_DAMAGE: int = 1
 }
 @onready var health: int = max_health:
 	set(value):
+		received_damage.emit(value - health, value)
 		health = value
 		modulate = START_COLOR.lerp(END_COLOR, 1 - float(health) / float(max_health))
 
@@ -62,6 +63,7 @@ const MINIMUM_DAMAGE: int = 1
 const START_COLOR: Color = Color.WHITE
 const END_COLOR: Color = Color.RED
 
+var locked: bool = false
 var move_vector: Vector2 = Vector2.ZERO
 var aim_vector: Vector2 = Vector2.ZERO
 var steer_rotation: float = 0:
@@ -132,7 +134,6 @@ func damage(value: int, piercing: int):
 	health -= total_damage
 	if health <= 0:
 		died.emit()
-	received_damage.emit(total_damage, health)
 	damage_sfx.play()
 
 func fire_all(start: bool = true):
@@ -176,14 +177,33 @@ func _draw_reticle():
 		line[i].position = lerp(reticle.position, Vector2.ZERO, float(i) / float(line.size()))
 
 
+const PICKUP: PackedScene = preload("res://game_objects/pickup.tscn")
+
 # SIGNALS
 func _on_died() -> void:
 	modulate = Color.DIM_GRAY
 	move_vector = Vector2.ZERO
 	aim_vector = Vector2.ZERO
-	collision_layer = 0
-	collision_mask = 0
-	print("dead")
+	call_deferred("on_died_deferred")
+
+func on_died_deferred() -> void:
+	%CollisionPolygon2D.disabled = true
+	var pickup: Pickup = PICKUP.instantiate()
+	var rnd: Weapon.AmmoType = ammo.keys().pick_random()
+	pickup.position = position
+	match rnd:
+		Weapon.AmmoType.SCRAP:
+			pickup.type = pickup.Type.SCRAP
+			pickup.value = ammo[rnd]
+		Weapon.AmmoType.BULLETS:
+			pickup.type = pickup.Type.BULLETS
+			pickup.value = ammo[rnd]
+		Weapon.AmmoType.ROCKETS:
+			pickup.type = pickup.Type.ROCKETS
+			pickup.value = ammo[rnd]
+	if pickup.value > 0:
+		add_sibling(pickup)
+	locked = true
 
 func _on_aggro_radius_body(body: Node2D, entered: bool) -> void:
 	if body is Vehicle and body != self:

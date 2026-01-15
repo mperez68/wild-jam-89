@@ -30,9 +30,9 @@ weapons = Dictionary[int, ExtResource("2_kfl33")]({
 2: ExtResource("3_enk41")
 })
 ammo = Dictionary[int, int]({
-0: 100,
-1: 10000,
-2: 100
+0: 0,
+1: 0,
+2: 0
 })
 
 [node name="AggroRadius" type="Area2D" parent="."]

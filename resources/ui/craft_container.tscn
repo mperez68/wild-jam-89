@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://stfa6bxefldg"]
+
+[ext_resource type="PackedScene" uid="uid://dynic8aip3myr" path="res://ui/sfx_button.tscn" id="1_0ayg6"]
+[ext_resource type="Script" uid="uid://blu7shf2o1hut" path="res://ui/scripts/craft_container.gd" id="1_bk21b"]
+[ext_resource type="Texture2D" uid="uid://bpx4wbmoxfcpn" path="res://icon.svg" id="2_bk21b"]
+
+[node name="CraftContainer" type="HBoxContainer"]
+alignment = 1
+script = ExtResource("1_bk21b")
+
+[node name="CraftButton" parent="." instance=ExtResource("1_0ayg6")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0
+SCRAP"
+
+[node name="IconRect" type="TextureRect" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 64)
+layout_mode = 2
+texture = ExtResource("2_bk21b")
+expand_mode = 2
+
+[node name="RewardLabel" type="Label" parent="IconRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="CraftButton" to="." method="_on_craft_button_pressed"]
