@@ -1,47 +1,60 @@
-[gd_scene load_steps=11 format=3 uid="uid://bt83rti4thkis"]
+[gd_scene load_steps=13 format=3 uid="uid://bt83rti4thkis"]
 
 [ext_resource type="Script" uid="uid://f5ndka2o5k3l" path="res://game_objects/scripts/pickup.gd" id="1_hrrif"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hrrif"]
-load_path = "res://.godot/imported/characters.png-d6ffa84ab3fa37930dc801b0af6f49b5.ctex"
+[ext_resource type="Texture2D" uid="uid://c2lc2xeuyoitj" path="res://assets/source/scrap_piles.png" id="2_hrrif"]
+[ext_resource type="Texture2D" uid="uid://dvrfyhqfcnlri" path="res://assets/sprites/characters.png" id="3_hnh71"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hnh71"]
-atlas = SubResource("CompressedTexture2D_hrrif")
-region = Rect2(64, 0, 16, 16)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_h5crm"]
-load_path = "res://.godot/imported/characters.png-d6ffa84ab3fa37930dc801b0af6f49b5.ctex"
+atlas = ExtResource("2_hrrif")
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hrrif"]
-atlas = SubResource("CompressedTexture2D_h5crm")
-region = Rect2(32, 0, 16, 16)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hnh71"]
-load_path = "res://.godot/imported/characters.png-d6ffa84ab3fa37930dc801b0af6f49b5.ctex"
+atlas = ExtResource("2_hrrif")
+region = Rect2(0, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r1i63"]
-atlas = SubResource("CompressedTexture2D_hnh71")
-region = Rect2(48, 0, 16, 16)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6j84d"]
-load_path = "res://.godot/imported/characters.png-d6ffa84ab3fa37930dc801b0af6f49b5.ctex"
+atlas = ExtResource("2_hrrif")
+region = Rect2(0, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e0heb"]
-atlas = SubResource("CompressedTexture2D_6j84d")
-region = Rect2(16, 0, 16, 16)
+atlas = ExtResource("2_hrrif")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="Gradient" id="Gradient_hrrif"]
+offsets = PackedFloat32Array(0, 0.46701846, 1)
+colors = PackedColorArray(1, 1, 0, 1, 1, 1, 0, 0.6784314, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hnh71"]
+gradient = SubResource("Gradient_hrrif")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hnh71"]
 radius = 24.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_1wv8p"]
+atlas = ExtResource("3_hnh71")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="Gradient" id="Gradient_6j84d"]
+offsets = PackedFloat32Array(0, 0.35733333, 0.73333335, 1)
+colors = PackedColorArray(1, 1, 0, 1, 0.6431373, 0, 0, 0.6431373, 0, 0, 0, 0.26666665, 0, 0, 0, 0)
+
 [node name="Pickup" type="Area2D"]
+rotation = 4.320964
 collision_layer = 8
 collision_mask = 7
 script = ExtResource("1_hrrif")
-value = null
 scrap_texture = SubResource("AtlasTexture_hnh71")
 bullets_texture = SubResource("AtlasTexture_hrrif")
 rockets_texture = SubResource("AtlasTexture_r1i63")
 repair_texture = SubResource("AtlasTexture_e0heb")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_hnh71")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -50,5 +63,20 @@ texture = SubResource("AtlasTexture_hnh71")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_hnh71")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 16
+texture = SubResource("AtlasTexture_1wv8p")
+lifetime = 2.0
+speed_scale = 0.5
+explosiveness = 0.4
+lifetime_randomness = 0.2
+emission_shape = 1
+emission_sphere_radius = 32.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 15.0
+initial_velocity_max = 30.0
+color_ramp = SubResource("Gradient_6j84d")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -58,4 +58,5 @@ func _on_weapons_changed(weapons: Dictionary[Vehicle.WeaponSlot, Weapon]):
 func _on_menu_button_pressed(show_menu: bool) -> void:
 	get_tree().paused = show_menu
 	game_hud.visible = !show_menu
+	game_hud.set_player(player_vehicle)
 	game_menu.visible = show_menu
