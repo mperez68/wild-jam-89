@@ -75,6 +75,7 @@ var dead: bool:
 	get():
 		return health <= 0
 var targets: Array[Vehicle] = []
+var rally_points: Array[Vector2] = []
 
 
 # ENGINE

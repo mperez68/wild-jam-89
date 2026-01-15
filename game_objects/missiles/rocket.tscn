@@ -6,3 +6,5 @@
 speed = 250.0
 acceleration = 250.0
 acceleration_tolerance = 25.0
+damage = 50
+piercing = 10

@@ -22,6 +22,7 @@ func _physics_process(_delta: float) -> void:
 		nav = vehicle.nav
 		nav.velocity_computed.connect(_on_velocity_computed)
 	
+	# Pursure target if it's in range
 	if !vehicle.targets.is_empty():
 		var target: Vehicle
 		for tgt: Vehicle in vehicle.targets:
@@ -37,6 +38,9 @@ func _physics_process(_delta: float) -> void:
 		else:
 			nav_to(vehicle.global_position)
 			vehicle.fire_all(false)
+	# Else, hit rally points.
+	elif nav.is_target_reached() or nav.target_position == Vector2.ZERO:
+		nav.target_position = vehicle.rally_points.pick_random()
 
 func nav_to(target: Vector2):
 	nav.target_position = target

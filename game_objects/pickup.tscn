@@ -1,0 +1,54 @@
+[gd_scene load_steps=11 format=3 uid="uid://bt83rti4thkis"]
+
+[ext_resource type="Script" uid="uid://f5ndka2o5k3l" path="res://game_objects/scripts/pickup.gd" id="1_hrrif"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hrrif"]
+load_path = "res://.godot/imported/characters.png-d6ffa84ab3fa37930dc801b0af6f49b5.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnh71"]
+atlas = SubResource("CompressedTexture2D_hrrif")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_h5crm"]
+load_path = "res://.godot/imported/characters.png-d6ffa84ab3fa37930dc801b0af6f49b5.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hrrif"]
+atlas = SubResource("CompressedTexture2D_h5crm")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hnh71"]
+load_path = "res://.godot/imported/characters.png-d6ffa84ab3fa37930dc801b0af6f49b5.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1i63"]
+atlas = SubResource("CompressedTexture2D_hnh71")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6j84d"]
+load_path = "res://.godot/imported/characters.png-d6ffa84ab3fa37930dc801b0af6f49b5.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e0heb"]
+atlas = SubResource("CompressedTexture2D_6j84d")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hnh71"]
+radius = 24.0
+
+[node name="Pickup" type="Area2D"]
+collision_layer = 8
+collision_mask = 7
+script = ExtResource("1_hrrif")
+value = null
+scrap_texture = SubResource("AtlasTexture_hnh71")
+bullets_texture = SubResource("AtlasTexture_hrrif")
+rockets_texture = SubResource("AtlasTexture_r1i63")
+repair_texture = SubResource("AtlasTexture_e0heb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_hnh71")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_hnh71")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

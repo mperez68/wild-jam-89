@@ -9,6 +9,7 @@ const BIKE: PackedScene = preload("res://game_objects/bike.tscn")
 
 @onready var player_spawn: Node2D = %PlayerSpawn
 @onready var spawn_points_holder: Node2D = %SpawnPoints
+@onready var rally_points: Node2D = %RallyPoints
 @onready var hud: Hud = %HUD
 
 var spawn_points: Array[Node2D] = []
@@ -24,10 +25,13 @@ func _ready() -> void:
 	vehicle.is_player = true
 	add_child(vehicle)
 	hud.set_player(vehicle)
-	
+	var rally: Array[Vector2]
+	for point in rally_points.get_children():
+		rally.push_back(point.position)
 	for i in spawn_points.size():
 		var bike: Vehicle = BIKE.instantiate()
 		bike.position = spawn_points[i].position
+		bike.rally_points = rally
 		add_child(bike)
 
 
