@@ -39,7 +39,6 @@ SCRAP"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 64)
 layout_mode = 2
-texture = SubResource("AtlasTexture_0clsb")
 stretch_mode = 5
 
 [node name="RewardLabel" type="Label" parent="IconRect"]

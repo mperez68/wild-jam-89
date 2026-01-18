@@ -4,6 +4,8 @@ class_name Pickup extends Area2D
 enum Type{ SCRAP, BULLETS, ROCKETS, REPAIR }
 
 @onready var sprite_2d: Sprite2D = %Sprite2D
+@onready var spawn_particles: CPUParticles2D = %SpawnParticles
+@onready var animation_player: AnimationPlayer = %AnimationPlayer
 
 @export var type: Type = Type.SCRAP:
 	set(value):
@@ -32,6 +34,7 @@ enum Type{ SCRAP, BULLETS, ROCKETS, REPAIR }
 func _ready():
 	type = type
 	rotation_degrees = randf_range(0, 359)
+	spawn_particles.emitting = true
 
 
 # PUBLIC
@@ -53,4 +56,9 @@ func _on_body_entered(body: Node2D) -> void:
 			Type.REPAIR:
 				body.health = min(body.max_health, body.health + value)
 		body.ammo_changed.emit(body.ammo)
+		spawn_particles.emitting = true
+		animation_player.play("pickup")
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "pickup":
 		queue_free()

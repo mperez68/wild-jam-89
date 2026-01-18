@@ -38,9 +38,6 @@ func _physics_process(_delta: float) -> void:
 		else:
 			nav_to(vehicle.global_position)
 			vehicle.fire_all(false)
-	# Else, hit rally points.
-	elif nav.is_target_reached() or nav.target_position == Vector2.ZERO:
-		nav.target_position = vehicle.rally_points.pick_random()
 
 func nav_to(target: Vector2):
 	nav.target_position = target

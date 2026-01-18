@@ -4,6 +4,7 @@ signal died
 signal received_damage(received: int, total: int)
 signal ammo_changed(ammo_store: Dictionary[Weapon.AmmoType, int])
 signal weapons_changed(weapons: Dictionary[WeaponSlot, Weapon])
+signal respawn
 
 enum WeaponSlot{ PRIMARY, SECONDARY, TERTIARY }
 
@@ -23,6 +24,8 @@ const MINIMUM_DAMAGE: int = 1
 @onready var reticle_container: Control = %ReticleContainer
 @onready var nav: NavigationAgent2D = %NavigationAgent2D
 @onready var line: Array[Control] = [ %Reticle, %Line, %Line2, %Line3 ]
+@onready var die_particles: CPUParticles2D = %DieParticles
+@onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var rotation_nodes: Array[Node] = [ %Sprite2D, %CollisionPolygon2D, %CameraHolder,
 											%Reticle, %Line, %Line2, %Line3 ]
 @onready var weapon_timers: Dictionary[WeaponSlot, Timer] = {
@@ -181,9 +184,10 @@ const PICKUP: PackedScene = preload("res://game_objects/pickup.tscn")
 
 # SIGNALS
 func _on_died() -> void:
-	modulate = Color.DIM_GRAY
 	move_vector = Vector2.ZERO
 	aim_vector = Vector2.ZERO
+	die_particles.emitting = true
+	animation_player.play("die")
 	call_deferred("on_died_deferred")
 
 func on_died_deferred() -> void:
@@ -213,3 +217,9 @@ func _on_aggro_radius_body(body: Node2D, entered: bool) -> void:
 			targets.push_back(body)
 		else:
 			targets.erase(body)
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "die":
+		is_player = false
+		respawn.emit()
+		queue_free()

@@ -8,30 +8,22 @@ const VEH: Array[PackedScene] = [
 const BIKE: PackedScene = preload("res://game_objects/bike.tscn")
 
 @onready var player_spawn: Node2D = %PlayerSpawn
-@onready var spawn_points_holder: Node2D = %SpawnPoints
-@onready var rally_points: Node2D = %RallyPoints
 @onready var hud: Hud = %HUD
+@onready var tiled_floor: TileMapLayer = %TiledFloor
 
 var spawn_points: Array[Node2D] = []
 
 
 # ENGINE
 func _ready() -> void:
-	for child in spawn_points_holder.get_children():
-		spawn_points.push_back(child)
+	for child in tiled_floor.get_children():
+		if child is SpawnPoint:
+			spawn_points.push_back(child)
 	
-	var vehicle: Vehicle = VEH[0].instantiate()#VEH.pick_random().instantiate()
-	vehicle.position = player_spawn.position
-	vehicle.is_player = true
-	add_child(vehicle)
-	hud.set_player(vehicle)
-	var rally: Array[Vector2]
-	for point in rally_points.get_children():
-		rally.push_back(point.position)
+	_on_player_spawn_request()
 	for i in spawn_points.size():
 		var bike: Vehicle = BIKE.instantiate()
 		bike.position = spawn_points[i].position
-		bike.rally_points = rally
 		add_child(bike)
 
 
@@ -42,6 +34,10 @@ func _ready() -> void:
 
 
 # SIGNALS
-func _on_shop_body_entered(body: Node2D, show_shop: bool = true) -> void:
-	if body is Vehicle and body.is_player:
-		hud.on_shop_button_pressed(show_shop)
+func _on_player_spawn_request():
+	var vehicle: Vehicle = VEH[0].instantiate()
+	vehicle.position = player_spawn.position
+	vehicle.is_player = true
+	vehicle.respawn.connect(_on_player_spawn_request)
+	add_child(vehicle)
+	hud.set_player(vehicle)

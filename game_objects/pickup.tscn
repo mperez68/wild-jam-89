@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bt83rti4thkis"]
+[gd_scene load_steps=16 format=3 uid="uid://bt83rti4thkis"]
 
 [ext_resource type="Script" uid="uid://f5ndka2o5k3l" path="res://game_objects/scripts/pickup.gd" id="1_hrrif"]
 [ext_resource type="Texture2D" uid="uid://c2lc2xeuyoitj" path="res://assets/source/scrap_piles.png" id="2_hrrif"]
@@ -43,8 +43,92 @@ region = Rect2(16, 16, 16, 16)
 offsets = PackedFloat32Array(0, 0.35733333, 0.73333335, 1)
 colors = PackedColorArray(1, 1, 0, 1, 0.6431373, 0, 0, 0.6431373, 0, 0, 0, 0.26666665, 0, 0, 0, 0)
 
+[sub_resource type="Animation" id="Animation_hnh71"]
+resource_name = "pickup"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CPUParticles2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_r1i63"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CPUParticles2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1wv8p"]
+_data = {
+&"RESET": SubResource("Animation_r1i63"),
+&"pickup": SubResource("Animation_hnh71")
+}
+
 [node name="Pickup" type="Area2D"]
-rotation = 4.320964
+rotation = 3.8994784
 collision_layer = 8
 collision_mask = 7
 script = ExtResource("1_hrrif")
@@ -79,4 +163,27 @@ initial_velocity_min = 15.0
 initial_velocity_max = 30.0
 color_ramp = SubResource("Gradient_6j84d")
 
+[node name="SpawnParticles" type="CPUParticles2D" parent="."]
+unique_name_in_owner = true
+emitting = false
+amount = 64
+texture = SubResource("AtlasTexture_1wv8p")
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.2
+emission_shape = 1
+emission_sphere_radius = 32.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 15.0
+initial_velocity_max = 30.0
+color_ramp = SubResource("Gradient_6j84d")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_1wv8p")
+}
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

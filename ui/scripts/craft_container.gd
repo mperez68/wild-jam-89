@@ -72,6 +72,7 @@ func update(vehicle: Vehicle = null, emit: bool = true):
 		icon_rect.texture = repair_texture
 	else:
 		reward_label.text = ""
+		icon_rect.texture = null
 	if item_reward:
 		icon_rect.texture = item_reward.icon
 	if player_vehicle and cost <= player_vehicle.ammo[cost_type]:

@@ -1,0 +1,132 @@
+[gd_scene load_steps=8 format=3 uid="uid://dqqk0h2f0nq3y"]
+
+[ext_resource type="Script" uid="uid://b3rudqhkjlcct" path="res://main_scenes/scripts/shop.gd" id="1_dcrgr"]
+[ext_resource type="Texture2D" uid="uid://c2lc2xeuyoitj" path="res://assets/source/scrap_piles.png" id="2_k87mq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e2843"]
+radius = 128.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p0rug"]
+atlas = ExtResource("2_k87mq")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ed05f"]
+atlas = ExtResource("2_k87mq")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hsdvb"]
+load_path = "res://.godot/imported/scrap_piles.png-a11eedbc6dd88ceb896a734b28a68d44.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5c0mn"]
+atlas = SubResource("CompressedTexture2D_hsdvb")
+region = Rect2(0, 32, 32, 32)
+
+[node name="Shop" type="Area2D"]
+collision_mask = 4
+script = ExtResource("1_dcrgr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_e2843")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(95, -62)
+rotation = -0.2617994
+texture = SubResource("AtlasTexture_p0rug")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(75, -52)
+rotation = 1.0471976
+texture = SubResource("AtlasTexture_p0rug")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(15, -64)
+rotation = -0.5235988
+texture = SubResource("AtlasTexture_p0rug")
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+position = Vector2(-78, -55)
+rotation = -0.5235988
+texture = SubResource("AtlasTexture_p0rug")
+
+[node name="Sprite2D5" type="Sprite2D" parent="."]
+position = Vector2(-56, -44)
+rotation = 0.5235988
+texture = SubResource("AtlasTexture_p0rug")
+
+[node name="Sprite2D6" type="Sprite2D" parent="."]
+position = Vector2(86, 60)
+rotation = -1.0432475
+texture = SubResource("AtlasTexture_p0rug")
+
+[node name="Sprite2D7" type="Sprite2D" parent="."]
+position = Vector2(31, 53.000004)
+rotation = -2.6179938
+texture = SubResource("AtlasTexture_p0rug")
+
+[node name="Sprite2D8" type="Sprite2D" parent="."]
+position = Vector2(57, 61.999996)
+rotation = -3.403392
+texture = SubResource("AtlasTexture_p0rug")
+
+[node name="Sprite2D9" type="Sprite2D" parent="."]
+position = Vector2(-72, 57.000004)
+rotation = -3.1415927
+texture = SubResource("AtlasTexture_p0rug")
+
+[node name="Sprite2D10" type="Sprite2D" parent="."]
+position = Vector2(-48, 63)
+rotation = -2.8797934
+texture = SubResource("AtlasTexture_p0rug")
+
+[node name="Sprite2D11" type="Sprite2D" parent="."]
+position = Vector2(107, 33)
+rotation = -2.8797934
+texture = SubResource("AtlasTexture_p0rug")
+
+[node name="Sprite2D12" type="Sprite2D" parent="."]
+position = Vector2(-107, -27)
+rotation = -3.403392
+texture = SubResource("AtlasTexture_p0rug")
+
+[node name="Sprite2D13" type="Sprite2D" parent="."]
+position = Vector2(-107, 42.000008)
+rotation = -0.5235988
+texture = SubResource("AtlasTexture_p0rug")
+
+[node name="Sprite2D14" type="Sprite2D" parent="."]
+position = Vector2(111, -27)
+rotation = -3.1415927
+texture = SubResource("AtlasTexture_p0rug")
+
+[node name="Sprite2D15" type="Sprite2D" parent="."]
+position = Vector2(58, -63)
+rotation = -3.1415927
+texture = SubResource("AtlasTexture_ed05f")
+
+[node name="Sprite2D16" type="Sprite2D" parent="."]
+position = Vector2(-94, 58)
+rotation = -3.1415927
+texture = SubResource("AtlasTexture_ed05f")
+
+[node name="Sprite2D17" type="Sprite2D" parent="."]
+position = Vector2(102, 49)
+rotation = -2.8797934
+texture = SubResource("AtlasTexture_5c0mn")
+
+[node name="Sprite2D18" type="Sprite2D" parent="."]
+position = Vector2(-30, -61)
+rotation = -2.0943952
+texture = SubResource("AtlasTexture_5c0mn")
+
+[node name="Sprite2D19" type="Sprite2D" parent="."]
+position = Vector2(-1, 52)
+rotation = -1.5707964
+texture = SubResource("AtlasTexture_5c0mn")
+
+[node name="Sprite2D20" type="Sprite2D" parent="."]
+position = Vector2(-100, -53)
+rotation = -1.3089969
+texture = SubResource("AtlasTexture_5c0mn")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

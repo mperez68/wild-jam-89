@@ -9,7 +9,7 @@
 max_health = 5
 speed = 750.0
 rotate_speed = 1.5
-turret_speed = 0.8
+turret_speed = 1.5
 friction = 0.96
 hull_strength = 0
 weapons = Dictionary[int, ExtResource("2_vry11")]({

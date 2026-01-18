@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cagvwdclup530"]
+[gd_scene load_steps=19 format=3 uid="uid://cagvwdclup530"]
 
 [ext_resource type="Script" uid="uid://bepdxnv417iq3" path="res://game_objects/scripts/vehicle.gd" id="1_s6qvh"]
 [ext_resource type="Script" uid="uid://cwbysqs5j2c1y" path="res://resource_script/weapon.gd" id="2_kfl33"]
@@ -18,6 +18,51 @@ radius = 500.0
 [sub_resource type="AtlasTexture" id="AtlasTexture_fhp78"]
 atlas = ExtResource("4_duy67")
 region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdkh3"]
+atlas = ExtResource("4_duy67")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="Gradient" id="Gradient_4s82p"]
+offsets = PackedFloat32Array(0, 0.35733333, 0.73333335, 1)
+colors = PackedColorArray(1, 1, 0, 1, 0.6431373, 0, 0, 0.6431373, 0, 0, 0, 0.26666665, 0, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_fg7j0"]
+resource_name = "die"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_6q51r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6am42"]
+_data = {
+&"RESET": SubResource("Animation_6q51r"),
+&"die": SubResource("Animation_fg7j0")
+}
 
 [node name="Vehicle" type="CharacterBody2D"]
 collision_layer = 4
@@ -159,9 +204,32 @@ unique_name_in_owner = true
 avoidance_enabled = true
 radius = 128.0
 
+[node name="DieParticles" type="CPUParticles2D" parent="."]
+unique_name_in_owner = true
+emitting = false
+amount = 32
+texture = SubResource("AtlasTexture_fdkh3")
+lifetime = 0.5
+explosiveness = 1.0
+lifetime_randomness = 0.2
+emission_shape = 3
+emission_rect_extents = Vector2(20, 10)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 15.0
+initial_velocity_max = 30.0
+color_ramp = SubResource("Gradient_4s82p")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_6am42")
+}
+
 [connection signal="died" from="." to="." method="_on_died"]
 [connection signal="body_entered" from="AggroRadius" to="." method="_on_aggro_radius_body" binds= [true]]
 [connection signal="body_exited" from="AggroRadius" to="." method="_on_aggro_radius_body" binds= [false]]
 [connection signal="timeout" from="PrimaryWeaponTimer" to="." method="_on_fire" binds= [0]]
 [connection signal="timeout" from="SecondaryWeaponTimer" to="." method="_on_fire" binds= [1]]
 [connection signal="timeout" from="TertiaryWeaponTimer" to="." method="_on_fire" binds= [2]]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
